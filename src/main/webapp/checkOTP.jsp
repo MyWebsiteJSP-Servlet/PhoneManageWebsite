@@ -1,3 +1,4 @@
+<%@page import="model.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -5,7 +6,6 @@
 <html lang="en">
 
 
-<!-- Mirrored from easetemplate.com/free-website-templates/mobistore/login-form.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 19 Nov 2021 09:41:05 GMT -->
 
 <head>
     <meta charset="utf-8">
@@ -14,7 +14,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="keywords" content="">
-    <title>Duy Anh Lập trình Web</title>
+    <title>DuyAnh LT WEB</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- Style CSS -->
@@ -30,8 +30,7 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-<style>
-    /* CSS cho modal */
+<style type="text/css">
 .modal {
 	display: flex; /* Ẩn modal ban đầu */
 	position: fixed;
@@ -125,13 +124,14 @@
 .suggestions-list li:hover {
 	background-color: #f9f9f9;
 }
+
+</style>    
     
-</style>
 </head>
 
 <body>
     <!-- top-header-->
-    <!-- top-header-->
+  <!-- top-header-->
     <div class="top-header">
         <div class="container">
             <div class="row">
@@ -155,13 +155,13 @@
                 <!-- logo -->
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-8">
                     <div class="logo">
-                        <a href="index.html"><img src="images/logo.png" alt=""> </a>
+                        <a href="LoadDataMain"><img src="images/logo.png" alt=""> </a>
                     </div>
                 </div>
                 <!-- /.logo -->
                 <!-- search -->
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <form action="SearchOnBox" method="post">
+                   <form action="SearchOnBox" method="post">
 						<div class="search-bg">
 							<!-- <input type="text"placeholder="Search Here"
 							id="searchBox" class="search-box" autocomplete="off"> -->
@@ -198,7 +198,9 @@
 											value="${sessionScope.khachHang.userName}" /></a>|</li>
 								<li><a href="http://localhost:8080/MobileWebApp/dang-xuat"
 									class="title hidden-xs">Log out </a></li>
-								<li><a href="load-page-favorite-list?userID=${sessionScope.khachHang.userID}"><i class="fa fa-heart"></i><sup class="cart-quantity">${soLuongSanPhamLike}</sup></a></li>
+								<li><a
+									href="load-page-favorite-list?userID=${sessionScope.khachHang.userID}"><i
+										class="fa fa-heart"></i><sup class="cart-quantity">${soLuongSanPhamLike}</sup></a></li>
 								<li><a href="cart.html" class="title"><i
 										class="fa fa-shopping-cart"></i><sup class="cart-quantity">1</sup></a>
 								</li>
@@ -234,7 +236,7 @@
             </div>
         </div>
     </div>
-   
+  
     <!-- /. header-section-->
     <div class="page-header">
         <div class="container">
@@ -243,7 +245,7 @@
                     <div class="page-breadcrumb">
                         <ol class="breadcrumb">
                             <li><a href="#">Trang chủ</a></li>
-                            <li>Đăng nhập</li>
+                            <li>Quên mật khẩu</li>
                         </ol>
                     </div>
 
@@ -252,129 +254,44 @@
         </div>
     </div>
     <!-- login-form -->
+<%
+    Object obj = session.getAttribute("khachHang");
+    User user = null;
+    if(obj != null) {
+    	user = (User) obj;
+    }
+    String sourceServlet = request.getAttribute("sourceServlet")+"";
+    sourceServlet = sourceServlet.equals("null")?"":sourceServlet;
+    String soNgauNhien = "";
+    String msg = "";
+    boolean kiemTra = false;
+    if(sourceServlet.equals("sendEmailPass")) {
+        soNgauNhien = request.getAttribute("maXacNhan")+"";
+    	soNgauNhien = soNgauNhien.equals("null")?"":soNgauNhien;
+    }else if(sourceServlet.equals("checkOTPController")) {
+    	soNgauNhien = request.getAttribute("soNgauNhien")+"";
+    	soNgauNhien = soNgauNhien.equals("null")?"":soNgauNhien;
+    	msg = request.getAttribute("baoLoi")+"";
+    	msg = msg.equals("null")?"":msg;
+    	kiemTra = true;
+    }
+    out.println("vvvvvvvvvvvvv"+soNgauNhien+"\\\\\\\\\\\\\\\\");
+    	
+    
 
+%>
     <div class="content">
-        <div class="container">
-            <div class="box">
-                <div class="row">
-                    <div class="col-lg-offset-1 col-lg-5 col-md-offset-1 col-md-5 col-sm-12 col-xs-12 ">
-                        <div class="box-body">
-                            <div class="row">
-                                <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12 mb20">
-                                    <h3 class="mb10">Đăng nhập</h3>
-                                </div>
-                                <!-- form -->
-                                <%
-                                  String sourceServlet = request.getAttribute("sourceServlet")+"";
-                                  sourceServlet = sourceServlet.equals("null")?"":sourceServlet;
-                                  boolean check1 = false;
-                                  boolean check2 = false;
-                                  boolean check3 = false;
-                                  String msg = "";
-                                  if(sourceServlet.equals("loginController")) {
-                                	  String error = request.getAttribute("error")+"";
-                                	  error = error.equals("null")?"":error;
-                                	  String thongBao = request.getAttribute("thongBao")+"";
-                                	  thongBao = thongBao.equals("null")?"":thongBao;
-                                	  if(error.equals("taiKhoanChuaXacNhan")) {
-                                		  check1 = true;
-                                		  msg = thongBao;
-                                	  }else if(error.equals("errorUserNameOrPass")) {
-                                		  check2 = true;
-                                		  msg = thongBao;
-                                	  }else if(error.equalsIgnoreCase("taikhoanbikhoa")) {
-                                		  check3 = true;
-                                		  msg = thongBao;
-                                	  }
-                                	  
-                                  }
-                                
-                                
-                                %>
-                                <form action="Login-Servlet" method="post">
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="control-label sr-only" for="email"></label>
-                                            <div class="login-input">
-                                                <input id="email"  type="text" class="form-control"
-                                                    placeholder="Tên Đăng Nhập" required = "required" name = "userName">
-                                                <div class="login-icon"><i class="fa fa-user"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                        <div class="form-group">
-                                            <label class="control-label sr-only"></label>
-                                            <div class="login-input">
-                                                <input name="password" type="password" class="form-control"
-                                                    placeholder="Mật khẩu" required = "required" >
-                                                <div class="login-icon"><i class="fa fa-lock"></i></div>
-                                                <div class="eye-icon"><i class="fa fa-eye"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb20 ">
-                                        <button class="btn btn-primary btn-block mb10">Đăng nhập</button>
-                                        <div style="margin: 0 auto; width: 50%">
-                                            <a href="signup-form.jsp" style="margin-right: 40px;" class="text-blue">Đăng ký</a>
-                                            <a href="forgot-password.jsp" class="text-blue">Quên mật khẩu </a>
-                                        </div>
-                                    </div>
-                                </form>
-
-                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                                    <h4 class="mb20">Hoặc đăng nhập với</h4>
-                                    <div class="social-media">
-                                        <a href="#" class="btn-social-rectangle btn-facebook"><i
-                                                class="fa fa-facebook"></i><span class="social-text">Facebook</span></a>
-                                        <a href="#" class="btn-social-rectangle btn-twitter"><i
-                                                class="fa fa-twitter"></i><span class="social-text">Twitter</span> </a>
-                                        <a href="#" class="btn-social-rectangle btn-googleplus"><i
-                                                class="fa fa-google-plus"></i><span class="social-text">Google
-                                                Plus</span></a>
-                                    </div>
-                                </div>
-                                <!-- /.form -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- features -->
-                    <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12 ">
-                        <div class="box-body">
-                            <div class="feature-left">
-                                <div class="feature-icon">
-                                    <img src="images/feature_icon_1.png" alt="">
-                                </div>
-                                <div class="feature-content">
-                                    <h4>Mức độ uy tín!</h4>
-                                    <p>Được đánh giá an toàn, tin cậy hàng đầu Việt Nam với nhiều chính sách hỗ trợ chăm sóc khách hàng.</p>
-                                </div>
-                            </div>
-                            <div class="feature-left">
-                                <div class="feature-icon">
-                                    <img src="images/feature_icon_2.png" alt="">
-                                </div>
-                                <div class="feature-content">
-                                    <h4>Thanh toán tức thì!</h4>
-                                    <p>Thanh toán mọi nơi mọi lúc, giao dịch nhanh gọn, bảo đảm, an toàn, với liên kết 90% ngân hàng, ví tiền, VISA trong toàn quốc!
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="feature-left">
-                                <div class="feature-icon">
-                                    <img src="images/feature_icon_3.png" alt="">
-                                </div>
-                                <div class="feature-content">
-                                    <h4>Ưu đãi hấp dẫn!</h4>
-                                    <p>Với mong muốn làm hài lòng khách hàng, Mobistore luôn mang đến những ưu đãi cực kỳ tốt với chất lượng cao
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.features -->
-                </div>
-            </div>
+        <div class="forgot-container">
+        <form action="check-OTP" method = "post">
+            <img src="images/otp-icon.png" alt="">
+            <h1 class="title">Nhập mã OTP</h1>
+            <p>Mã OTP được gửi qua email</p>
+            <!-- Hidden input to pass soNgauNhien to the servlet -->
+            <input type="hidden" name="soNgauNhien" value="<%= soNgauNhien %>">
+                <input type="text" class="field-email" placeholder="Nhập mã OTP" name = "maOTP" required="required">
+                <button type="btn-continue" class="submit-email mb20">Tiếp tục</button>
+            </form>
+            <a href= <%= "http://localhost:8080/MobileWebApp/send-mail?email=" + user.getEmail() %> class="text-blue">Gửi lại mã OTP</a>
         </div>
     </div>
     <!-- /.login-form -->
@@ -467,37 +384,24 @@
             <!-- /. tiny-footer -->
         </div>
     </div>
-    <% if(check1 == true) { %>
+    
+   <%if(kiemTra == true) { %>
     <div class="modal" id="successModal">
 		<div class="modal-content">
-			<img src="https://tse1.mm.bing.net/th?id=OIP.jZnEX7kzfh_5H-lln_XraAHaDt&pid=Api&P=0&h=180"
-			 alt = "Notify Icon" style="width: 100px; height: 50px" />
+			<img
+				src="https://tse1.mm.bing.net/th?id=OIP.jZnEX7kzfh_5H-lln_XraAHaDt&pid=Api&P=0&h=180"
+				alt="Notify Icon" style="width: 100px; height: 50px" />
 			<h3><%=msg%></h3>
 			<button class="btn-close" onclick="closeModal()">Đóng</button>
 		</div>
 	</div>
 	<%} %>
-	<% if(check2 == true) { %>
-	<div class="modal" id="successModal">
-		<div class="modal-content">
-			<img src="https://tse1.mm.bing.net/th?id=OIP.jZnEX7kzfh_5H-lln_XraAHaDt&pid=Api&P=0&h=180"
-			 alt = "Notify Icon" style="width: 100px; height: 50px" />
-			<h3><%=msg%></h3>
-			<button class="btn-close" onclick="closeModal()">Đóng</button>
-		</div>
-	</div>
-	<%} %>
-	 <% if(check3 == true) { %>
-    <div class="modal" id="successModal">
-		<div class="modal-content">
-			<img src="https://tse1.mm.bing.net/th?id=OIP.jZnEX7kzfh_5H-lln_XraAHaDt&pid=Api&P=0&h=180"
-			 alt = "Notify Icon" style="width: 100px; height: 50px" />
-			<h3><%=msg%></h3>
-			<button class="btn-close" onclick="closeModal()">Đóng</button>
-		</div>
-	</div>
-	<%} %>
-	
+	<script>
+		// Hàm đóng modal
+		function closeModal() {
+			document.getElementById("successModal").style.display = "none";
+		}
+	</script>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="js/jquery.min.js" type="text/javascript"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -505,12 +409,6 @@
     <script src="js/menumaker.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/jquery.sticky.js"></script>
     <script type="text/javascript" src="js/sticky-header.js"></script>
-    <script>
-	// Hàm đóng modal
-	function closeModal() {
-		document.getElementById("successModal").style.display = "none";
-	}
-    </script>
     <script type="text/javascript">
 	const searchBox = document.getElementById("searchBox");
 	const suggestionsList = document.getElementById("product-suggestions");
@@ -562,5 +460,7 @@
 	
 	</script>
 </body>
+
+
 
 </html>

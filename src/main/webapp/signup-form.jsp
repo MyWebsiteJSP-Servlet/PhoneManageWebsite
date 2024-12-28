@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,7 +11,7 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="">
 <meta name="keywords" content="">
-<title>Nhom 21 LT WEB</title>
+<title>Duy LTW</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <!-- Style CSS -->
@@ -28,7 +29,7 @@
 <style>
 /* CSS cho modal */
 .modal {
-	display: none; /* Ẩn modal ban đầu */
+	display: flex; /* Ẩn modal ban đầu */
 	position: fixed;
 	z-index: 1000;
 	left: 0;
@@ -80,63 +81,46 @@
 
 .btn-close:hover {
 	background-color: #c9302c;
-/*CSS form xác nhận thành công */
-.modal1 {
-	display: none; /* Ẩn modal ban đầu */
-	position: fixed;
-	z-index: 1000;
+	/*CSS form xác nhận thành công */ 
+}
+.search-bg {
+	position: relative; /* Giữ vị trí tương đối cho gợi ý */
+}
+
+/* Danh sách gợi ý */
+.suggestions-list {
+	position: absolute; /* Định vị độc lập */
+	top: 100%; /* Hiển thị ngay bên dưới thanh input */
 	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-	justify-content: center;
-	align-items: center;
-}
-
-.modal-content1 {
-	background-color: #fff;
-	padding: 30px;
-	border-radius: 8px;
-	text-align: center;
-	position: relative;
-	width: 90%;
-	max-width: 400px;
-}
-
-.modal-content1 img {
-	width: 50px;
-	margin-bottom: 20px;
-}
-
-.modal-content1 h3 {
-	margin: 0;
-	font-size: 24px;
-	color: #28a745;
-}
-
-.modal-content1 p {
-	margin-top: 10px;
-	font-size: 16px;
-	color: #555;
-}
-
-.btn-close1 {
-	margin-top: 20px;
-	padding: 10px 20px;
-	background-color: #d9534f;
-	color: #fff;
-	border: none;
+	right: 0;
+	background-color: white; /* Nền trắng cho danh sách */
+	z-index: 10000000000000; /* Đảm bảo nằm trên navigation */
+	border: 1px solid #ddd;
 	border-radius: 4px;
-	cursor: pointer;
-	font-size: 16px;
+	max-height: 300px; /* Giới hạn chiều cao */
+	overflow-y: auto; /* Thêm scroll nếu danh sách quá dài */
+	display: none; /* Mặc định ẩn */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 
-.btn-close1:hover {
-	background-color: #c9302c;
-	
-	
+/* Hiển thị danh sách gợi ý */
+.suggestions-list.active {
+	display: block;
 }
+
+/* Các mục trong danh sách gợi ý */
+.suggestions-list li {
+	padding: 10px;
+	cursor: pointer;
+	border-bottom: 1px solid #f1f1f1;
+}
+
+.suggestions-list li:hover {
+	background-color: #f9f9f9;
+}	
 </style>
 
 </head>
@@ -151,8 +135,8 @@
 				</div>
 				<div class="col-lg-4 col-md-5 col-sm-6 col-xs-12">
 					<ul>
-						<li>+084 123 4567</li>
-						<li>nhom21@laptrinhweb.com</li>
+						<li>+03434 634 29</li>
+						<li>laptrinhweb@mail.com</li>
 					</ul>
 				</div>
 			</div>
@@ -160,6 +144,20 @@
 		</div>
 	</div>
 	<!-- header-section-->
+	<%-- <%
+String sourceServlet = request.getAttribute("sourceServlet")+"";
+sourceServlet = sourceServlet.equals("null")?"":sourceServlet;
+Object obj = session.getAttribute("khachHang");
+User us = null;
+boolean check1 = false;
+if(sourceServlet.equals("loginController")) {
+	if(obj != null) {
+		us = (User) obj;
+		check1 = true;
+	}
+}
+
+%> --%>
 	<div class="header-wrapper">
 		<div class="container">
 			<div class="row">
@@ -173,27 +171,50 @@
 				<!-- /.logo -->
 				<!-- search -->
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-					<div class="search-bg">
-						<input type="text" class="form-control" placeholder="Search Here">
-						<button type="Submit">
-							<i class="fa fa-search"></i>
-						</button>
-					</div>
+					<form action="SearchOnBox" method="post">
+						<div class="search-bg">
+							<!-- <input type="text"placeholder="Search Here"
+							id="searchBox" class="search-box" autocomplete="off"> -->
+							<input type="text" class="form-control"
+								placeholder="Tìm kiếm sản phẩm..." id="searchBox"
+								class="search-box" autocomplete="off" list="product-suggestions"
+								name="searchOnBox" value="${required}"> <input
+								type="hidden" id="pageNumber" name="page" value="1">
+							<button type="Submit">
+								<i class="fa fa-search"></i>
+							</button>
+							<ul id="product-suggestions" class="suggestions-list">
+								<!-- Gợi ý sẽ được thêm bằng JavaScript -->
+							</ul>
+						</div>
+					</form>
 				</div>
 				<!-- /.search -->
 				<!-- account -->
 				<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 					<div class="account-section">
 						<ul>
-							<li><a href="account.html" class="title hidden-xs">Tài
-									khoản</a></li>
-							<li class="hidden-xs">|</li>
-							<li><a href="login-form.html" class="title hidden-xs">Đăng
-									Nhập</a></li>
-							<li><a href="favorite-list.html"><i class="fa fa-heart"></i></a></li>
-							<li><a href="cart.html" class="title"><i
-									class="fa fa-shopping-cart"></i><sup class="cart-quantity">1</sup></a>
-							</li>
+							<c:if test="${empty sessionScope.khachHang}">
+								<li><a href="noAccount.jsp" class="title hidden-xs">Tài
+										khoản</a></li>
+								<li class="hidden-xs">|</li>
+								<li><a href="login-form.jsp" class="title hidden-xs">Đăng
+										Nhập</a></li>
+							</c:if>
+							<c:if test="${not empty sessionScope.khachHang}">
+								<li><a
+									href="http://localhost:8080/MobileWebApp/account-login?userID=${sessionScope.khachHang.userID}"
+									class="title hidden-xs">Hi <c:out
+											value="${sessionScope.khachHang.userName}" /></a>|</li>
+								<li><a href="http://localhost:8080/MobileWebApp/dang-xuat"
+									class="title hidden-xs">Log out </a></li>
+								<li><a
+									href="load-page-favorite-list?userID=${sessionScope.khachHang.userID}"><i
+										class="fa fa-heart"></i><sup class="cart-quantity">${soLuongSanPhamLike}</sup></a></li>
+								<li><a href="cart.html" class="title"><i
+										class="fa fa-shopping-cart"></i><sup class="cart-quantity">1</sup></a>
+								</li>
+							</c:if>
 						</ul>
 					</div>
 					<!-- /.account -->
@@ -209,8 +230,10 @@
 						<!-- navigations-->
 						<div id="navigation">
 							<ul>
-								<li class="active"><a href="index.html">Trang chủ</a></li>
-								<li><a href="product-list.html">Điện thoại</a></li>
+								<li class="active"><a href="LoadDataMain">Trang chủ</a></li>
+								<li><a
+									href="http://localhost:8080/MobileWebApp/load-product?page=1">Điện
+										thoại</a></li>
 								<li><a href="about.html">Thông tin</a></li>
 								<li><a href="blog-default.html">Bài viết</a></li>
 								<li><a href="contact-us.html">Liên hệ, hỗ trợ</a></li>
@@ -254,26 +277,108 @@
 									<p>Vui lòng điền đầy đủ các thông tin bên dưới</p>
 								</div>
 								<%
-								String baoLoi = request.getAttribute("baoLoi") + "";
-								baoLoi = baoLoi.equals("null") ? "" : baoLoi;
+								/* 	String sourceServlet = request.getAttribute("sourceServlet")+"";
+									sourceServlet = sourceServlet.equals("null")?"":sourceServlet;
+									Object obj = session.getAttribute("khachHang");
+									User us = null;
+									boolean check1 = false;
+									if(sourceServlet.equals("loginController")) {
+										if(obj != null) {
+									us = (User) obj;
+									check1 = true;
+										}
+									} */
+								String sourceServlet = request.getAttribute("sourceServlet") + "";
+								sourceServlet = sourceServlet.equals("null") ? "" : sourceServlet;
+								String baoLoi = "";
+								String tenDangNhap = "";
+								String hoVaTen = "";
+								String email = "";
+								String phone = "";
+								String dateOfBirth = "";
+								String addRess = "";
+								String sex = "";
+								boolean kiemTra = false;
+								boolean xacThuc = false;
+								boolean mo = false;
+								boolean dong = false;
+								boolean xacThuc2 = false;
+								boolean xacThuc3 = false;
+								String message = "";
+								if (sourceServlet.equals("signUpController")) {
+									String trangThaiDangKy = request.getAttribute("kiemTra") + "";
+									if (trangThaiDangKy.equals("true")) {
+										kiemTra = true;
+										out.println(kiemTra);
+										tenDangNhap = request.getAttribute("username") + "";
+										tenDangNhap = tenDangNhap.equals("null") ? "" : tenDangNhap;
+									} else {
+										baoLoi = request.getAttribute("baoLoi") + "";
+										baoLoi = baoLoi.equals("null") ? "" : baoLoi;
 
-								String tenDangNhap = request.getAttribute("username") + "";
-								tenDangNhap = tenDangNhap.equals("null") ? "" : tenDangNhap;
+										tenDangNhap = request.getAttribute("username") + "";
+										tenDangNhap = tenDangNhap.equals("null") ? "" : tenDangNhap;
 
-								String email = request.getAttribute("email") + "";
-								email = email.equals("null") ? "" : email;
+										hoVaTen = request.getAttribute("fullName") + "";
+										hoVaTen = hoVaTen.equals("null") ? "" : hoVaTen;
 
-								String phone = request.getAttribute("phone") + "";
-								phone = phone.equals("null") ? "" : phone;
+										email = request.getAttribute("email") + "";
+										email = email.equals("null") ? "" : email;
 
-								String dateOfBirth = request.getAttribute("dateofbirth") + "";
-								dateOfBirth = dateOfBirth.equals("null") ? "" : dateOfBirth;
+										phone = request.getAttribute("phone") + "";
+										phone = phone.equals("null") ? "" : phone;
 
-								String addRess = request.getAttribute("addRess") + "";
-								addRess = addRess.equals("null") ? "" : addRess;
+										dateOfBirth = request.getAttribute("dateofbirth") + "";
+										dateOfBirth = dateOfBirth.equals("null") ? "" : dateOfBirth;
 
-								String sex = request.getAttribute("sex") + "";
-								sex = addRess.equals("null") ? "" : sex;
+										addRess = request.getAttribute("addRess") + "";
+										addRess = addRess.equals("null") ? "" : addRess;
+
+										sex = request.getAttribute("sex") + "";
+										sex = addRess.equals("null") ? "" : sex;
+									}
+								} else if (sourceServlet.equals("VertifyController")) {
+									String hd = request.getAttribute("hanhDong") + "";
+									hd = hd.equals("null") ? "" : hd;
+									if (hd.equals("confirm")) {
+										String trangThaiXacThuc = request.getAttribute("isXacThuc") + "";
+										trangThaiXacThuc = trangThaiXacThuc.equals("null") ? "" : trangThaiXacThuc;
+										String msg = request.getAttribute("thongBao") + "";
+										msg = msg.equals("null") ? "" : msg;
+										if (trangThaiXacThuc.equals("true")) {
+									xacThuc = true;
+									message = msg;
+										} else {
+									message = msg;
+									kiemTra = true;
+									mo = true;
+										}
+									} else if (hd.equals("close")) {
+										String msg = request.getAttribute("thongBao") + "";
+										msg = msg.equals("null") ? "" : msg;
+										message = msg;
+										dong = true;
+									}
+
+								} else if (sourceServlet.equals("RegisterImage")) {
+									String kq = request.getAttribute("kiemTra") + "";
+									kq = kq.equals("null") ? "" : kq;
+									if (kq.equals("true")) {
+										String msg = request.getAttribute("thongBao") + "";
+										msg = msg.equals("null") ? "" : msg;
+										message = msg;
+										xacThuc2 = true;
+									}
+								} else if (sourceServlet.equals("InsertImage")) {
+									String kt = request.getAttribute("check") + "";
+									kt = kt.equals("null") ? "" : kt;
+									String msg = request.getAttribute("thongTin") + "";
+									msg = msg.equals("null") ? "" : msg;
+									if (kt.equals("true")) {
+										xacThuc3 = true;
+										message = msg;
+									}
+								}
 								%>
 								<div class="red" id="baoLoi"
 									style="color: red; margin-left: 20px;">
@@ -293,7 +398,7 @@
 											<label class="control-label sr-only" for="phone"></label> <input
 												id="password" name="password" type="password"
 												class="form-control" placeholder="MẬT KHẨU"
-												required="required">
+												required="required" />
 										</div>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -302,7 +407,15 @@
 												class="red" id="msg" style="color: red"></span> <input
 												id="again-password" name="again-password" type="password"
 												class="form-control" placeholder="NHẬP LẠI MẬT KHẨU"
-												required="required" onkeyup="xacNhanMatKhau()">
+												required="required" onkeyup="xacNhanMatKhau()" />
+										</div>
+									</div>
+									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<div class="form-group">
+											<label class="control-label  sr-only" for="password"></label>
+											<input id="fullName" name="fullName" type="text"
+												class="form-control" placeholder="HỌ VÀ TÊN"
+												required="required" value="<%=hoVaTen%>">
 										</div>
 									</div>
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -351,13 +464,13 @@
 											</select>
 										</div>
 									</div>
-									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									<!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										<div class="form-group">
 											<label class="control-label  sr-only" for="re_password"></label>
 											<input id="avatar" name="avatar" type="file"
 												class="form-control" accept="image/*">
 										</div>
-									</div>
+									</div> -->
 									<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 										<button class="btn btn-primary btn-block mb10">Đăng
 											Ký</button>
@@ -415,107 +528,9 @@
 	</div>
 	<!-- /.sign-up form -->
 	<!-- footer -->
-	<div class="footer">
-		<div class="container">
-			<div class="row">
-				<!-- footer-company-links -->
-				<!-- footer-contact links -->
-				<div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
-					<div class="footer-widget">
-						<h3 class="footer-title">Thông tin hỗ trợ</h3>
-						<div class="contact-info">
-							<span class="contact-icon"><i class="fa fa-map-marker"></i></span>
-							<span class="contact-text">Phường Linh Trung, Thủ Đức<br>Thành
-								phố Hồ Chí Minh, Việt Nam - 1955
-							</span>
-						</div>
-						<div class="contact-info">
-							<span class="contact-icon"><i class="fa fa-phone"></i></span> <span
-								class="contact-text">+084-123-4567 / 89</span>
-						</div>
-						<div class="contact-info">
-							<span class="contact-icon"><i class="fa fa-envelope"></i></span>
-							<span class="contact-text">nhom21@ltweb.com</span>
-						</div>
-					</div>
-				</div>
-				<!-- /.footer-useful-links -->
-				<div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
-					<div class="footer-widget">
-						<h3 class="footer-title">Truy cập nhanh</h3>
-						<ul class="arrow">
-							<li><a href="index.html">Trang chủ</a></li>
-							<li><a href="product-list.html">Điện thoại</a></li>
-							<li><a href="about.html">Thông tin</a></li>
-							<li><a href="blog-default.html">Bài viết</a></li>
-							<li><a href="contact-us.html">Liên hệ</a></li>
-						</ul>
-					</div>
-				</div>
-				<!-- /.footer-useful-links -->
-				<!-- footer-policy-list-links -->
-				<div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
-					<div class="footer-widget">
-						<h3 class="footer-title">Chính sách</h3>
-						<ul class="arrow">
-							<li><a href="#">Thanh toán</a></li>
-							<li><a href="#">Hủy, trả hàng</a></li>
-							<li><a href="#">Giao hàng và vận chuyển</a></li>
-							<li><a href="#">Chính sách bảo mật</a></li>
-						</ul>
-					</div>
-				</div>
-				<!-- /.footer-policy-list-links -->
-				<!-- footer-social links -->
-				<div class=" col-lg-3 col-md-3 col-sm-3 col-xs-12">
-					<div class="footer-widget">
-						<h3 class="footer-title">Liên lạc với chúng tôi</h3>
-						<div class="ft-social">
-							<span><a href="#" class="btn-social btn-facebook"><i
-									class="fa fa-facebook"></i></a></span> <span><a href="#"
-								class="btn-social btn-twitter"><i class="fa fa-twitter"></i></a></span>
-							<span><a href="#" class="btn-social btn-googleplus"><i
-									class="fa fa-google-plus"></i></a></span> <span><a href="#"
-								class=" btn-social btn-linkedin"><i class="fa fa-linkedin"></i></a></span>
-							<span><a href="#" class=" btn-social btn-pinterest"><i
-									class="fa fa-pinterest-p"></i></a></span> <span><a href="#"
-								class=" btn-social btn-instagram"><i class="fa fa-instagram"></i></a></span>
-						</div>
-					</div>
-				</div>
-				<!-- /.footer-social links -->
-			</div>
-		</div>
-		<!-- tiny-footer -->
-		<div class="tiny-footer">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<div class="payment-method alignleft">
-							<ul>
-								<li><a href="#"><i class="fa fa-cc-paypal fa-2x"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-mastercard  fa-2x"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-visa fa-2x"></i></a></li>
-								<li><a href="#"><i class="fa fa-cc-discover fa-2x"></i></a></li>
-							</ul>
-						</div>
-						<p class="alignright">
-							Copyright © All Rights Reserved 2020 Template Design by <a
-								href="https://easetemplate.com/" target="_blank"
-								class="copyrightlink">Nhom 21</a>
-						</p>
-					</div>
-				</div>
-			</div>
-			<!-- /. tiny-footer -->
-		</div>
-	</div>
 	<!-- Modal thông báo đăng ký thành công -->
 	<%
-	   String xacThuc = request.getAttribute("baoLoi")+"";
-	   xacThuc = xacThuc.equals("null")?"":xacThuc;
-	   
-	
+	if (kiemTra == true) {
 	%>
 	<div class="modal" id="successModal">
 		<div class="modal-content">
@@ -523,19 +538,106 @@
 				alt="Success Icon" />
 			<h3>Đăng ký thành công</h3>
 			<p>Bạn vui lòng truy cập email để kích hoạt tài khoản.</p>
-			<button class="btn-close" onclick="closeModal()">Đóng</button>
+			<!-- Thêm nhãn và ô nhập mã xác nhận -->
+			<%
+			if (mo == true) {
+			%>) <span class="red" style="color: red"><%=message%></span>
+			<%
+			}
+			%>
+			<form action="VerifyServlet" method="post">
+				<label for="verificationCode">Nhập mã xác nhận:</label> <input
+					type="text" name="maXacNhan" id="verificationCode"
+					placeholder="Nhập mã xác nhận" />
+				<button class="btn-close" name="action" value="confirm">Xác
+					nhận</button>
+				<button class="btn-close" name="action" value="close">Đóng</button>
+			</form>
 		</div>
 	</div>
-	<div class="modal1" id="successModal1">
-		<div class="modal-content1">
+	<%
+	}
+	%>
+	<%
+	if (xacThuc == true) {
+	%>
+	<form action="register-img" method="post">
+		<div class="modal" id="successModal">
+			<div class="modal-content">
+				<img src="https://img.icons8.com/color/48/000000/checked--v1.png"
+					alt="Success Icon" />
+				<h3><%=message%></h3>
+				<button class="btn-close" name="action" value="xacThuc"
+					onclick="closeModal()">Đóng</button>
+			</div>
+		</div>
+	</form>
+	<%
+	}
+	%>
+	<%
+	if (dong == true) {
+	%>
+	<form action="register-img" method="post">
+		<div class="modal" id="successModal">
+			<div class="modal-content">
+				<img
+					src="https://tse1.mm.bing.net/th?id=OIP.jZnEX7kzfh_5H-lln_XraAHaDt&pid=Api&P=0&h=180"
+					alt="Notify Icon" style="width: 100px; height: 50px" />
+				<h3><%=message%></h3>
+				<button class="btn-close" onclick="closeModal()" name="action"
+					value="xacThuc">Đóng</button>
+			</div>
+		</div>
+	</form>
+	<%
+	}
+	%>
+	<%
+	if (xacThuc2 == true) {
+	%>
+	<form action="up-Load-File" method="post" enctype="multipart/form-data">
+		<div class="modal" id="successModal">
+			<div class="modal-content">
+				<img
+					src="https://tse3.mm.bing.net/th?id=OIP.pAyRN_lNf6IPukCMXYcRcQAAAA&pid=Api&P=0&h=180"
+					alt="Avatar Icon" />
+				<h3><%=message%></h3>
+				<div class="form-group">
+					<label class="control-label  sr-only" for="re_password"></label> <input
+						id="avatar" name="file" type="file" class="form-control"
+						accept="image/*">
+				</div>
+				<button class="btn-close" name="action" value="upLoad" type="submit">Upload</button>
+				<button class="btn-close" name="action" value="upLoadSau"
+					type="button" onclick="closeModal()">
+					<a href="http://localhost:8080/MobileWebApp/huyPhien">Upload
+						sau</a>
+				</button>
+			</div>
+		</div>
+	</form>
+	<%
+	}
+	%>
+	<%
+	if (xacThuc3 == true) {
+	%>
+	<div class="modal" id="successModal">
+		<div class="modal-content">
 			<img src="https://img.icons8.com/color/48/000000/checked--v1.png"
 				alt="Success Icon" />
-			<h3><%= xacThuc %></h3>
-			<button class="btn-close1" onclick="closeModal1()">Đóng</button>
+			<h3><%=message%></h3>
+			<button class="btn-close" name="action" value="xacThuc"
+				onclick="closeModal()">Đóng</button>
 		</div>
 	</div>
-	
+	<%
+	}
+	%>
+
 	<!-- /.footer -->
+
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<script src="js/jquery.min.js" type="text/javascript"></script>
 	<!-- Include all compiled plugins (below), or include individual files as needed -->
@@ -544,6 +646,84 @@
 	<script type="text/javascript" src="js/jquery.sticky.js"></script>
 	<script type="text/javascript" src="js/sticky-header.js"></script>
 	-->
+		<script type="text/javascript">
+	const searchBox = document.getElementById("searchBox");
+	const suggestionsList = document.getElementById("product-suggestions");
+
+	 // Xử lý khi người dùng nhập từ khóa
+	searchBox.addEventListener("input", function () {
+	    const keyword = this.value.trim();
+
+	    // Nếu từ khóa có ít nhất 1 ký tự
+	    if (keyword.length > 1) {
+	    	console.log(keyword);
+	    	console.log(`URL Fetch: SearchServlet?ans=`+keyword);
+	        fetch(`SearchServlet?ans=`+keyword)
+	            .then(response => response.json())
+	            .then(data => {
+	                // Xóa các gợi ý cũ
+	                suggestionsList.innerHTML = "";
+                  
+	                // Thêm các gợi ý mới
+	                data.forEach(product => {
+	                    const suggestionItem = document.createElement("li");
+	                    suggestionItem.textContent = product.name;
+	                    suggestionItem.addEventListener("click", function () {
+	                        searchBox.value = product.name; // Gán sản phẩm được chọn vào thanh tìm kiếm
+	                        suggestionsList.innerHTML = ""; // Xóa gợi ý
+	                        suggestionsList.classList.remove("active"); // Ẩn danh sách
+	                    });
+	                    suggestionsList.appendChild(suggestionItem);
+	                });
+
+	                // Hiển thị danh sách gợi ý
+	                suggestionsList.classList.add("active");
+	            });
+	            
+	    } else {
+	        // Ẩn danh sách nếu không có từ khóa
+	        suggestionsList.innerHTML = "";
+	        suggestionsList.classList.remove("active");
+	    }
+	});
+
+	// Ẩn danh sách khi nhấp ra ngoài
+	document.addEventListener("click", function (e) {
+	    if (!searchBox.contains(e.target) && !suggestionsList.contains(e.target)) {
+	        suggestionsList.innerHTML = "";
+	        suggestionsList.classList.remove("active");
+	    }
+	}); 
+	
+	</script>
+	
+	<script>
+		// Hàm đóng modal
+		function closeModal() {
+			document.getElementById("successModal").style.display = "none";
+			
+		}
+
+	<%-- 	// Kiểm tra trạng thái đăng ký thành công và hiển thị modal
+		window.onload = function() {
+	<%if ("true".equals(request.getAttribute("kiemTra") + "")) {%>
+		document.getElementById("successModal").style.display = "flex";
+	<%}%>
+		}; --%>
+
+		// Hàm đóng modal
+		function closeModal1() {
+			document.getElementById("successModal1").style.display = "none";
+		}
+
+		// Kiểm tra trạng thái đăng ký thành công và hiển thị modal
+	<%-- window.onload = function() {
+	<%if ("true".equals(request.getAttribute("xacThuc") + "")) {%>
+		document.getElementById("successModal1").style.display = "flex";
+	<%}%> --%>
+	
+	</script>
+	
 
 </body>
 <script>
@@ -558,29 +738,6 @@
 			return true;
 		}
 	}
-	// Hàm đóng modal
-    function closeModal() {
-      document.getElementById("successModal").style.display = "none";
-    }
-
-    // Kiểm tra trạng thái đăng ký thành công và hiển thị modal
-    window.onload = function() {
-      <% if ("true".equals(request.getAttribute("kiemTra")+"")) { %>
-        document.getElementById("successModal").style.display = "flex";
-      <% } %>
-    };
-    
- // Hàm đóng modal
-    function closeModal1() {
-      document.getElementById("successModal1").style.display = "none";
-    }
-
-    // Kiểm tra trạng thái đăng ký thành công và hiển thị modal
-    window.onload = function() {
-      <% if ("true".equals(request.getAttribute("xacThuc")+"")) { %>
-        document.getElementById("successModal1").style.display = "flex";
-      <% } %>
-    };
 </script>
 
 </html>
