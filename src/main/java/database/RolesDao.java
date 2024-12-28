@@ -85,9 +85,6 @@ public class RolesDao implements DAOInterface<Roles> {
 			st.setString(2, t.getRoleName());
 			//B3: thực thi câu lệnh SQL
 			answer = st.executeUpdate();
-			//B4:
-			System.out.println("Bạn đã thực thi: "+sql);
-			System.out.println("Có "+ answer +" dòng bị thay đổi");
 			//B5
 			JDBCUtil.closeConnection(con);
 		} catch (Exception e) {
@@ -121,9 +118,6 @@ public class RolesDao implements DAOInterface<Roles> {
 			System.out.println(sql);
 			ansWer = st.executeUpdate();
 			//B4:
-			System.out.println("Bạn đã thực thi câu lệnh: "+sql);
-			System.out.println("Có "+ansWer + "dòng bị thay đổi");
-			//B5:
 			JDBCUtil.closeConnection(con);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -158,9 +152,6 @@ public class RolesDao implements DAOInterface<Roles> {
 			System.out.println(sql);
 			ansWer = st.executeUpdate();
 			//B4:
-			System.out.println("Bạn đã thực thi câu lệnh: "+sql);
-			System.out.println("Có "+ansWer +" dòng bị thay đổi");
-			//B5: đóng connect
 			JDBCUtil.closeConnection(con);
 		} catch (Exception e) {
 			// TODO: handle exception

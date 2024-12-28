@@ -8,7 +8,10 @@ import java.sql.SQLException;
 import com.mysql.cj.jdbc.Driver;
 
 public class JDBCUtil {
-	public static Connection getConnection() {
+	private static final String DB_URL = "jdbc:sqlserver://localhost:1752;databaseName=ManagementPhoneWeb;integratedSecurity=true;";
+    private static final String USER = "sa"; // Tên đăng nhập SQL Server
+    private static final String PASSWORD = "duyvlm10"; // Mật khẩu SQL Server
+	public static Connection getConnection() throws ClassNotFoundException  {
 		Connection c = null;
 		
 		try {
@@ -16,19 +19,27 @@ public class JDBCUtil {
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			
 			// Các thông số
-			String url = "jdbc:mySQL://localhost:3306/managementphoneweb";
+			String url = "jdbc:mySQL://localhost:3306/webphone?useUnicode=true&characterEncoding=UTF-8&characterSetResults=UTF-8&connectionCollation=utf8mb4_unicode_ci";
 			String username = "root";
 			String password = "";
 			
 			// Tạo kết nối
 			c = DriverManager.getConnection(url, username, password);
 			
+           
+
+//            if (c != null) {
+//                System.out.println("Kết nối thành công!");
+//            }
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return c;
+	}
+	public static void main(String[] args) throws ClassNotFoundException {
+		System.out.println(getConnection());
 	}
 	
 	public static void closeConnection(Connection c) {
