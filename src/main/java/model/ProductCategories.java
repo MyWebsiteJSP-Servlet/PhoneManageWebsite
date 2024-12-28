@@ -1,5 +1,7 @@
 package model;
 
+import database.ProductDao;
+
 public class ProductCategories {
 private String productCategoriesID;
 private String nameCategories;
@@ -21,6 +23,11 @@ public String getNameCategories() {
 }
 public void setNameCategories(String nameCategories) {
 	this.nameCategories = nameCategories;
+}
+public int getNumPhone() {
+	ProductDao proDAO = new ProductDao();
+	int sl = proDAO.getNumPhoneByCate(this.nameCategories);
+	return sl;
 }
 
 

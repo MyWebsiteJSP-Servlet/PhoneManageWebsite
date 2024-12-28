@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 public class OrderDetails {
 private String orderDetailsID;
 private int quantity;
@@ -46,6 +48,7 @@ public double getUnitPrice() {
 public void setUnitPrice(double unitPrice) {
 	this.unitPrice = unitPrice;
 }
+
 
 
 }

@@ -6,6 +6,7 @@ public class User {
 private String userID;
 private String userName;
 private String passWord;
+private String fullName;
 private String email;
 private String phoneNumber;
 private Roles role;
@@ -17,14 +18,15 @@ private String authenticationCode;
 private Date confirmationTime;
 private int status;
 private String imageAvatar;
-
-public User(String userID, String userName, String passWord, String email, String phoneNumber, Roles role,
+private String isKey;
+public User(String userID, String userName, String passWord, String fullName, String email, String phoneNumber, Roles role,
 		Date dateOfBirth, String sex, String address, Date createAt, String authenticationCode, Date confirmationTime,
-		int status, String imageAvatar) {
+		int status, String imageAvatar, String isKey) {
 	super();
 	this.userID = userID;
 	this.userName = userName;
 	this.passWord = passWord;
+	this.fullName = fullName;
 	this.email = email;
 	this.phoneNumber = phoneNumber;
 	this.role = role;
@@ -36,15 +38,17 @@ public User(String userID, String userName, String passWord, String email, Strin
 	this.confirmationTime = confirmationTime;
 	this.status = status;
 	this.imageAvatar = imageAvatar;
+	this.isKey = isKey;
 }
 
 
-public User(String userID, String userName, String passWord, String email, String phoneNumber, Roles role,
+public User(String userID, String userName, String passWord, String fullName, String email, String phoneNumber, Roles role,
 		Date dateOfBirth, String sex, String address, Date createAt, String imageAvatar) {
 	super();
 	this.userID = userID;
 	this.userName = userName;
 	this.passWord = passWord;
+	this.fullName = fullName;
 	this.email = email;
 	this.phoneNumber = phoneNumber;
 	this.role = role;
@@ -53,6 +57,24 @@ public User(String userID, String userName, String passWord, String email, Strin
 	this.address = address;
 	this.createAt = createAt;
 	this.imageAvatar = imageAvatar;
+	this.isKey = "Hoạt động";
+}
+public User(String userID, String userName, String passWord, String fullName, String email, String phoneNumber, Roles role,
+		Date dateOfBirth, String sex, String address, Date createAt, String imageAvatar, String isKey) {
+	super();
+	this.userID = userID;
+	this.userName = userName;
+	this.passWord = passWord;
+	this.fullName = fullName;
+	this.email = email;
+	this.phoneNumber = phoneNumber;
+	this.role = role;
+	this.dateOfBirth = dateOfBirth;
+	this.sex = sex;
+	this.address = address;
+	this.createAt = createAt;
+	this.imageAvatar = imageAvatar;
+	this.isKey = isKey;
 }
 
 public User() {
@@ -166,6 +188,28 @@ public String getAddress() {
 public void setAddress(String address) {
 	this.address = address;
 }
+
+
+public String getFullName() {
+	return fullName;
+}
+
+
+public void setFullName(String fullName) {
+	this.fullName = fullName;
+}
+
+
+public String getIsKey() {
+	return isKey;
+}
+
+
+public void setIsKey(String isKey) {
+	this.isKey = isKey;
+}
+
+
 
 
 
