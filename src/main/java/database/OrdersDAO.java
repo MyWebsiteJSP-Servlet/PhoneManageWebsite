@@ -123,6 +123,34 @@ public class OrdersDAO implements DAOInterface<Orders> {
 		}
 		return orders;
 	}
+	public Orders selectOrderByID2(String orderID) {
+		Orders orders = null;
+		try {
+			Connection con = JDBCUtil.getConnection();
+			String sql = "SELECT * FROM orders WHERE ordersID = ?";
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setString(1, orderID.trim());
+			ResultSet rs = stm.executeQuery();
+			UserDao userDAO = new UserDao();
+			while(rs.next()) {
+				String ordersID = rs.getString("ordersID");
+				Date date = rs.getDate("ordersDate");
+				String userID = rs.getString("userID");
+				String status = rs.getString("status");
+				double totalAmount = rs.getDouble("totalAmount");
+				String shippingAddress = rs.getString("shippingAddress");
+				String phone = rs.getString("phone");
+				Orders orders2 = new Orders(ordersID, date, userDAO.selectUserById(userID), status, totalAmount, shippingAddress, phone);
+				orders = orders2;
+				break;
+			}
+			JDBCUtil.closeConnection(con);
+ 		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return orders;
+	}
 
 	public int insertOrderInDB(Orders order, double totalAmount, String phone, String diaChi) {
 		// TODO Auto-generated method stub
@@ -179,7 +207,7 @@ public class OrdersDAO implements DAOInterface<Orders> {
 		return ans;
 	}
 
-	public boolean kiemTraUserIsOrder(String userID) {
+	public boolean kiemTraUserIsOrder2(String userID) {
 		// TODO Auto-generated method stub
 		boolean res = false;
 		try {
@@ -196,8 +224,27 @@ public class OrdersDAO implements DAOInterface<Orders> {
 		}
 		return res;
 	}
+	public boolean kiemTraUserIsOrder(String userID) {
+		boolean res = false;
+		try {
+			Connection con = JDBCUtil.getConnection();
+			String sql = "SELECT * FROM orders WHERE userID = ?";
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setString(1, userID);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				res = true;
+				break;
+			}
+			JDBCUtil.closeConnection(con);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return res;
+	}
 
-	public int getTongSoOrder(String userID) {
+	public int getTongSoOrder2(String userID) {
 		// TODO Auto-generated method stub
 		int ans = 0;
 		try {
@@ -213,6 +260,25 @@ public class OrdersDAO implements DAOInterface<Orders> {
 		}
 		return ans;
 	}
+	public int getTongSoOrder(String userID) {
+		int res = 0;
+		try {
+			Connection con = JDBCUtil.getConnection();
+			String sql = "SELECT * FROM orders WHERE userID = ?";
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setString(1, userID);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				res++;
+			}
+			JDBCUtil.closeConnection(con);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return res;
+	}
+	
 
 	public Orders getOrdersByID(String orderID) {
 		// TODO Auto-generated method stub
@@ -231,6 +297,7 @@ public class OrdersDAO implements DAOInterface<Orders> {
 		}
 		return or;
 	}
+	
 
 	public int updateStatus(Orders order) {
 		// TODO Auto-generated method stub
@@ -265,6 +332,24 @@ public class OrdersDAO implements DAOInterface<Orders> {
 			e.printStackTrace();
 		}
 	    return ans;
+	}
+
+	public int capNhatDaThanhToan(String orderID) {
+		// TODO Auto-generated method stub
+	   int res = 0;
+	   try {
+		Connection con = JDBCUtil.getConnection();
+		String sql = "UPDATE orders SET status = ? WHERE ordersID = ?";
+		PreparedStatement stm = con.prepareStatement(sql);
+		stm.setString(1, "Đã thanh toán");
+		stm.setString(2, orderID.trim());
+		res = stm.executeUpdate();
+		JDBCUtil.closeConnection(con);
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+	}
+	   return res;
 	}
 
 	

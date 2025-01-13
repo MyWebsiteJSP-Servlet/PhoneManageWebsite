@@ -202,8 +202,8 @@ public class UserDao implements DAOInterface<User> {
 		int res = 0;
 		try {
 			Connection con = JDBCUtil.getConnection();
-			String sql = "INSERT INTO user (userID, userName, passWord, fullName, email, phoneNumber, roleID, dateofbirth, sex, address, createAt, authenticationCode, confirmationTime, status, image)"
-					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+			String sql = "INSERT INTO user (userID, userName, passWord, fullName, email, phoneNumber, roleID, dateofbirth, sex, address, createAt, authenticationCode, confirmationTime, status, image, isKey)"
+					+ " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setString(1, user.getUserID());
 			st.setString(2, user.getUserName());
@@ -220,6 +220,7 @@ public class UserDao implements DAOInterface<User> {
 			st.setDate(13, null);
 			st.setInt(14, 0);
 			st.setString(15, "");
+			st.setString(16, user.getIsKey());
 			res = st.executeUpdate();
 			JDBCUtil.closeConnection(con);
 		} catch (Exception e) {
@@ -291,6 +292,47 @@ public class UserDao implements DAOInterface<User> {
 			String sql = "SELECT * FROM user WHERE userID=?";
 			PreparedStatement st = con.prepareStatement(sql);
 			st.setString(1, user.getUserID());
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				String userID = rs.getString("userID");
+				String userName = rs.getString("userName");
+				String passWord = rs.getString("passWord");
+				String fullName = rs.getString("fullName");
+				String email = rs.getString("email");
+				String phoneNum = rs.getString("phoneNumber");
+				int roleID = rs.getInt("roleID");
+				Roles roles = new Roles();
+				roles.setRoleID(roleID);
+				Roles role = new RolesDao().selectById(roles);
+				Date dateOfBirth = rs.getDate("dateofbirth");
+				String sex = rs.getString("sex");
+				String addRess = rs.getString("address");
+				Date date = rs.getDate("createAt");
+				String maXacNhan = rs.getString("authenticationCode");
+				Date thoiGianXacNhan = rs.getDate("confirmationTime");
+				int status = rs.getInt("status");
+				String image = rs.getString("image");
+				String key = rs.getString("isKey");
+				us = new User(userID, userName, passWord, fullName, email, phoneNum, role, dateOfBirth, sex, addRess,
+						date, maXacNhan, thoiGianXacNhan, status, image, key);
+				break;
+			}
+			JDBCUtil.closeConnection(con);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return us;
+
+	}
+	public User selectById3(String  userID1) {
+		// TODO Auto-generated method stub
+		User us = null;
+		try {
+			Connection con = JDBCUtil.getConnection();
+			String sql = "SELECT * FROM user WHERE userID=?";
+			PreparedStatement st = con.prepareStatement(sql);
+			st.setString(1, userID1);
 			ResultSet rs = st.executeQuery();
 			while (rs.next()) {
 				String userID = rs.getString("userID");

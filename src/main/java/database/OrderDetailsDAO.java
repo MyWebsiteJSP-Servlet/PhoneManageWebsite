@@ -39,6 +39,8 @@ public class OrderDetailsDAO implements DAOInterface<OrderDetails>{
 		}
 		return lst;
 	}
+	
+	
 
 	@Override
 	public OrderDetails selectById(OrderDetails t) {
@@ -84,8 +86,8 @@ public class OrderDetailsDAO implements DAOInterface<OrderDetails>{
 			String sql = "SELECT * FROM orderdetails ORDER BY orderDetailsID DESC LIMIT 1";
 			PreparedStatement stm = con.prepareStatement(sql);
 			ResultSet rs = stm.executeQuery();
-			ProductDao proDAO = new ProductDao();
-			OrdersDAO orderDAO = new OrdersDAO();
+			//ProductDao proDAO = new ProductDao();
+			//OrdersDAO orderDAO = new OrdersDAO();
 			while(rs.next()) {
 				String orderDetailsID = rs.getString("orderDetailsID");
 //				int quantity = rs.getInt("quantity");
@@ -141,6 +143,33 @@ public class OrderDetailsDAO implements DAOInterface<OrderDetails>{
 			e.printStackTrace();
 		}
 		return lstAns;
+	}
+	
+	public List<OrderDetails> getListOrderDetails2(String orderID2) {
+		List<OrderDetails> lst = new ArrayList<OrderDetails>();
+		try {
+			Connection con = JDBCUtil.getConnection();
+			String sql = "SELECT * FROM orderdetails WHERE orderID = ?";
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setString(1, orderID2);
+			OrdersDAO orderDAO = new OrdersDAO();
+			ProductDao proDao = new ProductDao();
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				String orderDetailsID = rs.getString("orderDetailsID");
+				int quantity = rs.getInt("quantity");
+				String orderID = rs.getString("orderID");
+				String productID = rs.getString("productID");
+				double unitPrice = rs.getDouble("unitPrice");
+				OrderDetails orderDetails = new OrderDetails(orderDetailsID, quantity, proDao.selectProByID2(productID), orderDAO.selectOrderByID(orderID), unitPrice);
+				lst.add(orderDetails);
+			}
+			JDBCUtil.closeConnection(con);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return lst;
 	}
 		
 	

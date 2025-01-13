@@ -144,7 +144,7 @@ public class ProductDao implements DAOInterface<Product> {
 		// TODO Auto-generated method stub
 		ArrayList<Product> lst = new ArrayList<Product>();
 		int tongSoSP = tongSoSanPham();
-		System.out.println(tongSoSP);
+		//System.out.println(tongSoSP);
 		try {
 			int tongSoTrang = tongSoSP / 9;
 			tongSoTrang++;
@@ -2272,6 +2272,49 @@ public class ProductDao implements DAOInterface<Product> {
 					break;
 				}
 			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return pro;
+	}
+	public Product selectProByID2(String productID) {
+		Product pro = null;
+		try {
+			Connection con = JDBCUtil.getConnection();
+			String sql = "SELECT * FROM product WHERE productID = ?";
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setString(1, productID);
+			ResultSet rs = stm.executeQuery();
+			ProductCategoriesDAO proCateDao = new ProductCategoriesDAO();
+			InformationproductDAO inforDao = new InformationproductDAO();
+			while(rs.next()) {
+				String proID = rs.getString("productID");
+				String name = rs.getString("name");
+				String price = rs.getString("price");
+				int stock = rs.getInt("stockQuantity");
+				String des = rs.getString("description");
+				String img = rs.getString("image");
+				Date date = rs.getDate("createAt");
+				if (date == null) {
+					date = null;
+				}
+
+				String proCateID = rs.getString("productCategoriesID");
+				ProductCategories proMD = new ProductCategories();
+				proMD.setProductCategoriesID(proCateID);
+				ProductCategories proCate = proCateDao.selectById(proMD);
+
+				String inforPro = rs.getString("informationProductID");
+				InformationProduct infor = new InformationProduct();
+				infor.setInfo_ID(inforPro);
+				InformationProduct inforDB = inforDao.selectById(infor);
+
+				Product product = new Product(proID, name, price, stock, des, img, date, proCate, inforDB);
+				pro = product;
+				break;
+			}
+			JDBCUtil.closeConnection(con);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

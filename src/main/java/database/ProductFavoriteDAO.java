@@ -97,7 +97,7 @@ public class ProductFavoriteDAO implements DAOInterface<ProductFavorite> {
 		}
 	}
 
-	public boolean selectProductFavorite(String productID, String userID) {
+	public boolean selectProductFavorite2(String productID, String userID) {
 		// TODO Auto-generated method stub
 		boolean res = false;
 		try {
@@ -109,6 +109,26 @@ public class ProductFavoriteDAO implements DAOInterface<ProductFavorite> {
 					break;
 				}
 			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return res;
+	}
+	public boolean selectProductFavorite(String productID, String userID) {
+		boolean res = false;
+		try {
+			Connection con = JDBCUtil.getConnection();
+			String sql = "SELECT * FROM productfavorite WHERE productID = ? AND userID = ?";
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setString(1, productID);
+			stm.setString(2, userID);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				res = true;
+				break;
+			}
+			JDBCUtil.closeConnection(con);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -200,6 +220,24 @@ public class ProductFavoriteDAO implements DAOInterface<ProductFavorite> {
 			e.printStackTrace();
 		}
 		return count;
+	}
+	public int getSoLuong2(String userID) {
+		int res = 0;
+		try {
+			Connection con = JDBCUtil.getConnection();
+			String sql = "SELECT * FROM productfavorite WHERE userID = ?";
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setString(1, userID);
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()) {
+				res++;
+			}
+			JDBCUtil.closeConnection(con);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	public int deleteProFavoriteInList(String productID, String userID) {

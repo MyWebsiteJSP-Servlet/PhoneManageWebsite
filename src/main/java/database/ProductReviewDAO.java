@@ -134,12 +134,12 @@ public class ProductReviewDAO implements DAOInterface<ProductReview> {
 				String comment = result.getString("comment");
 				Date date = result.getDate("createAt");
 				if (date == null) {
-					ProductReview proReviewNew = new ProductReview(reviewID, userDao.selectUserById(userID),
-							proDao.selectProByID(productID), rating, comment, null);
+					ProductReview proReviewNew = new ProductReview(reviewID, userDao.selectById3(userID),
+							proDao.selectProByID2(productID), rating, comment, null);
 					lst.add(proReviewNew);
 				} else {
-					ProductReview proReviewNew = new ProductReview(reviewID, userDao.selectUserById(userID),
-							proDao.selectProByID(productID), rating, comment, date);
+					ProductReview proReviewNew = new ProductReview(reviewID, userDao.selectById3(userID),
+							proDao.selectProByID2(productID), rating, comment, date);
 					lst.add(proReviewNew);
 				}
 
