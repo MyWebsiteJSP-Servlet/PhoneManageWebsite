@@ -52,8 +52,8 @@ public class GoToCartController extends HttpServlet {
 						   tongTien += price;
 						}
 						ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-				        List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(user.getUserID());
-				        request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+				        int lstProductFavoriteDao = productFaDao.getSoLuong2(user.getUserID());
+				        request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 				        String slSP = "";
 						if (list != null) {
 							slSP = list.getList().size() + "";
@@ -68,8 +68,8 @@ public class GoToCartController extends HttpServlet {
 						rd.forward(request, response);
 					}else {
 						 ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-					        List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(user.getUserID());
-					        request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+					        int lstProductFavoriteDao = productFaDao.getSoLuong2(user.getUserID());
+					        request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 					        String slSP = "";
 							if (list != null) {
 								slSP = list.getList().size() + "";

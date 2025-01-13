@@ -127,7 +127,7 @@ public class AddToCartController extends HttpServlet {
 					}
 				} else {
 					String ans = xuLy(orderIDCurrent.trim());
-					Product product = proDao.selectProByID(productID);
+					Product product = proDao.selectProByID2(productID);
 					if (!checkProExist(product, listItem)) {
 						if(kiemTraConHang(product)) {
 						Date todaysDate = new Date(new java.util.Date().getTime());
@@ -248,9 +248,9 @@ public class AddToCartController extends HttpServlet {
 				mo = true;
 			}
 		}
-		System.out.println(ans+"số là số");
+	//	System.out.println(ans+"số là số");
 		int ansInt = Integer.parseInt(ans);
-		System.out.println(ansInt+"labubu");
+	//	System.out.println(ansInt+"labubu");
 		int ansIntNext = ansInt + 1;
 		String result = "";
 		if (ansIntNext < 10) {

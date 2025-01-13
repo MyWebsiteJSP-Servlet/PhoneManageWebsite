@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.ProductFavoriteDAO;
+import model.ListOrderDetailsItem;
 import model.ProductFavorite;
 import model.User;
 
@@ -41,12 +42,21 @@ public class DeleteProInListFavoriteCon extends HttpServlet {
 		List<ProductFavorite> ans = new ArrayList<ProductFavorite>();
 		if(session != null) {
 			User user = (User) session.getAttribute("khachHang");
+			  ListOrderDetailsItem li = (ListOrderDetailsItem) session.getAttribute("listItem");
+		        String slSP = "";
+				if (li != null) {
+					slSP = li.getList().size() + "";
+					slSP = (slSP == "0") ? "0" : slSP;
+				} else {
+					slSP = "0";
+				}
+				request.setAttribute("soLuongSP", slSP);
 			if(user != null) {
 				ProductFavoriteDAO proFaDao = new ProductFavoriteDAO();
 				String productID = request.getParameter("productID");
 				if(proFaDao.deleteProFavoriteInList(productID, user.getUserID()) > 0) {
-					List<ProductFavorite> lstProductFavoriteDao = proFaDao.getLstProFavorite(user.getUserID());
-					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+					int lstProductFavoriteDao = proFaDao.getSoLuong2(user.getUserID());
+					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 					List<ProductFavorite> lst = proFaDao.getLstProFavorite(user.getUserID());
 					request.setAttribute("danhSach", lst);
 					RequestDispatcher rd = getServletContext().getRequestDispatcher("/favorite-list.jsp");

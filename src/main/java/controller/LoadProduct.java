@@ -64,7 +64,7 @@ public class LoadProduct extends HttpServlet {
 					tongSoPage++;
 				}
 				ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-				List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(user.getUserID());
+				int lstProductFavoriteDao = productFaDao.getSoLuong2(user.getUserID());
 				String sourceServlet = (String) request.getParameter("sourceServlet");
 				boolean checkVar = false;
 				boolean checkVar1 = false;
@@ -82,7 +82,7 @@ public class LoadProduct extends HttpServlet {
 				request.setAttribute("checkHetHang", checkVar1);
 				request.setAttribute("uri", uriReal);
 				request.setAttribute("thamSo", thamSo);
-				request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+				request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 				request.setAttribute("soLuongSP", slSP);
 				request.setAttribute("currentPage", pageInt);
 				request.setAttribute("listPro", listPro);

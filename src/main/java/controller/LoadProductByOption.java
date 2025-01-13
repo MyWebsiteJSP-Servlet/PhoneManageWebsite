@@ -116,7 +116,7 @@ public class LoadProductByOption extends HttpServlet {
 						tongSoTrang++;
 					}
 					ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-					List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(user.getUserID());
+					int lstProductFavoriteDao = productFaDao.getSoLuong2(user.getUserID());
 					String uri = request.getRequestURI();
 					String ans = xuLy(uri);
 					ListOrderDetailsItem lst = (ListOrderDetailsItem) session.getAttribute("listItem");
@@ -144,7 +144,7 @@ public class LoadProductByOption extends HttpServlet {
 					request.setAttribute("soLuongSP", sl);
 					request.setAttribute("uri", ans);
 					request.setAttribute("thamSo", thamSo);
-					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 					request.setAttribute("currentPage", pageInt);
 					request.setAttribute("listPro", lst_Pro);
 					request.setAttribute("nameOption", option);
@@ -160,7 +160,7 @@ public class LoadProductByOption extends HttpServlet {
 						tongSoTrang++;
 					}
 					ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-					List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(user.getUserID());
+					int lstProductFavoriteDao = productFaDao.getSoLuong2(user.getUserID());
 					String uri = request.getRequestURI();
 					String ans = xuLy(uri);
 					ListOrderDetailsItem lst = (ListOrderDetailsItem) session.getAttribute("listItem");
@@ -187,7 +187,7 @@ public class LoadProductByOption extends HttpServlet {
 					request.setAttribute("soLuongSP", sl);
 					request.setAttribute("uri", ans);
 					request.setAttribute("thamSo", thamSo);
-					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 					request.setAttribute("currentPage", pageInt);
 					request.setAttribute("listPro", lst_Pro);
 					request.setAttribute("nameOption", option);
@@ -203,7 +203,7 @@ public class LoadProductByOption extends HttpServlet {
 						tongSoTrang++;
 					}
 					ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-					List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(user.getUserID());
+					int lstProductFavoriteDao = productFaDao.getSoLuong2(user.getUserID());
 					String uri = request.getRequestURI();
 					String ans = xuLy(uri);
 					ListOrderDetailsItem lst = (ListOrderDetailsItem) session.getAttribute("listItem");
@@ -230,7 +230,7 @@ public class LoadProductByOption extends HttpServlet {
 					request.setAttribute("soLuongSP", sl);
 					request.setAttribute("uri", ans);
 					request.setAttribute("thamSo", thamSo);
-					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 					request.setAttribute("currentPage", pageInt);
 					request.setAttribute("listPro", lst_Pro);
 					request.setAttribute("nameOption", option);

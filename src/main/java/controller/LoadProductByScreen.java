@@ -77,7 +77,7 @@ public class LoadProductByScreen extends HttpServlet {
 					tongSoTrang++;
 				}
 				ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-				List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(user.getUserID());
+				int lstProductFavoriteDao = productFaDao.getSoLuong2(user.getUserID());
 				String uri = request.getRequestURI();
 				String uriReal = xuLyURI(uri);
 				String thamSo = URLEncoder.encode(request.getQueryString(), "UTF-8");
@@ -85,7 +85,7 @@ public class LoadProductByScreen extends HttpServlet {
 				request.setAttribute("checkHetHang", checkVar1);
 				request.setAttribute("uri", uriReal);
 				request.setAttribute("thamSo", thamSo);
-				request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+				request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 				request.setAttribute("soLuongSP", slSP);
 				request.setAttribute("currentPage", pageInt);
 				request.setAttribute("listPro", lst_Res);

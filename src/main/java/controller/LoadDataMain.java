@@ -68,8 +68,8 @@ public class LoadDataMain extends HttpServlet {
 		    if (user != null) {
 		        // Nếu user tồn tại trong session, lấy danh sách sản phẩm yêu thích
 		        ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-		        List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(user.getUserID());
-		        request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+		        int lstProductFavoriteDao = productFaDao.getSoLuong2(user.getUserID());
+		        request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 		        ListOrderDetailsItem li = (ListOrderDetailsItem) session.getAttribute("listItem");
 		        String slSP = "";
 				if (li != null) {

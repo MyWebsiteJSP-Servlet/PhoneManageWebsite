@@ -43,7 +43,7 @@ public class XemChiTietFeedBackControl extends HttpServlet {
 			String fbID = request.getParameter("feedbackID");
 			CustomerFeedback cusFB = cusDAO.selectByIDFB(fbID);
 			ProductFavoriteDAO proFaDao = new ProductFavoriteDAO();
-			int soLuongSanPhamLike = proFaDao.getSoLuong(us.getUserID().trim());
+			int soLuongSanPhamLike = proFaDao.getSoLuong2(us.getUserID().trim());
 			ListOrderDetailsItem li = (ListOrderDetailsItem) session.getAttribute("listItem");
 			String slSP = "";
 			if (li != null) {

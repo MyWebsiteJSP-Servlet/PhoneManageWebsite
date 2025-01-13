@@ -60,7 +60,7 @@ public class AccountLoginController extends HttpServlet {
 					String sex = us.getSex();
 					String img = us.getImageAvatar();
 					ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-					List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(user.getUserID());
+					int lstProductFavoriteDao = productFaDao.getSoLuong2(user.getUserID());
 					ListOrderDetailsItem li = (ListOrderDetailsItem) session.getAttribute("listItem");
 					String slSP = "";
 					if (li != null) {
@@ -69,7 +69,7 @@ public class AccountLoginController extends HttpServlet {
 					} else {
 						slSP = "0";
 					}
-					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 					request.setAttribute("soLuongSP", slSP);
 					request.setAttribute("hoVaTen", hoVaTen);
 					request.setAttribute("email", email);

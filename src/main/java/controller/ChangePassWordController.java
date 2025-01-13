@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import database.ProductFavoriteDAO;
 import database.UserDao;
+import model.ListOrderDetailsItem;
 import model.User;
 import util.MaHoa;
 
@@ -57,6 +59,18 @@ public class ChangePassWordController extends HttpServlet {
 			String matKhauHienTai = request.getParameter("passWord");
 			String matKhauHienTaiMaHoa = MaHoa.toSHA1(matKhauHienTai);
 			String matKhau = user.getPassWord();
+			  ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
+		        int lstProductFavoriteDao = productFaDao.getSoLuong2(user.getUserID());
+		        request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
+		        ListOrderDetailsItem li = (ListOrderDetailsItem) session.getAttribute("listItem");
+		        String slSP = "";
+				if (li != null) {
+					slSP = li.getList().size() + "";
+					slSP = (slSP == "0") ? "0" : slSP;
+				} else {
+					slSP = "0";
+				}
+				request.setAttribute("soLuongSP", slSP);
 			if(matKhau.equals(matKhauHienTaiMaHoa)) {
 				String matKhauMoi = request.getParameter("passWordNew");
 				String matKhauMoiNhapLai = request.getParameter("passWordNewAgain");

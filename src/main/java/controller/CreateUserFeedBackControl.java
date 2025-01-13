@@ -70,8 +70,8 @@ public class CreateUserFeedBackControl extends HttpServlet {
 					baoLoi += "Email không chính xác";
 				}
 				ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-				List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(us.getUserID());
-				request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+				int lstProductFavoriteDao = productFaDao.getSoLuong2(us.getUserID());
+				request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 				ListOrderDetailsItem li = (ListOrderDetailsItem) session.getAttribute("listItem");
 				String slSP = "";
 				if (li != null) {
@@ -80,7 +80,7 @@ public class CreateUserFeedBackControl extends HttpServlet {
 				} else {
 					slSP = "0";
 				}
-				request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+				request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 				request.setAttribute("soLuongSP", slSP);
 				String msg = "";
 				if (baoLoi.length() == 0) {

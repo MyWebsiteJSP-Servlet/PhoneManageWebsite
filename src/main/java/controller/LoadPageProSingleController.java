@@ -90,23 +90,23 @@ public class LoadPageProSingleController extends HttpServlet {
 				productID = (String) request.getAttribute("productID");
 				baoLoi = (String) request.getAttribute("baoLoi");
 				checkComment2 = true;
-			} else if(sourceServlet.equalsIgnoreCase("LoadPageProSingleMemoryColor")) {
+			} else if (sourceServlet.equalsIgnoreCase("LoadPageProSingleMemoryColor")) {
 				baoLoi = (String) request.getAttribute("baoLoi");
-				if(baoLoi.length() > 1) {
+				if (baoLoi.length() > 1) {
 					productID = (String) request.getAttribute("productID");
 					System.out.println("meo meo meo meo ");
 					checkMemoryColor = true;
-				}else {
+				} else {
 					productID = (String) request.getAttribute("productID");
 				}
-			}else {
+			} else {
 				productID = (String) request.getParameter("productID");
 			}
 			ProductDao proDao = new ProductDao();
 			Product proTmp = proDao.getProductByID(productID);
 			String link = proTmp.getImage();
-			System.out.println("image hiện tại: "+link);
-			System.out.println("iD hiện tại" +proTmp.getProductID());
+			System.out.println("image hiện tại: " + link);
+			System.out.println("iD hiện tại" + proTmp.getProductID());
 			String colorCurrentTmp = proTmp.getInformationPro().getColor();
 			String memoryCurrentTmp = proTmp.getInformationPro().getMemory();
 			List<Product> dsProLienQuan = proDao.getDsProLienQuan(proTmp);
@@ -137,7 +137,7 @@ public class LoadPageProSingleController extends HttpServlet {
 				starAvg = (int) lamTron;
 			} else {
 				starAvg = 0;
-				checkBinhLuan =true;
+				checkBinhLuan = true;
 			}
 //			System.out.println(avg);
 //			System.out.println(lamTron);
@@ -178,21 +178,24 @@ public class LoadPageProSingleController extends HttpServlet {
 			// Danh sách các productreview
 			List<ProductReview> lst = new ArrayList<ProductReview>();
 			if (totalComment != 0) {
-				 lst = proReviewDao.getTongBinhLuanById(productID);
+				lst = proReviewDao.getTongBinhLuanById(productID);
 			}
 			// sản phẩm liên quan
 			List<Product> dsSanPhamLQ = proDao.getDanhSachSanPhamLQNgauNhien(proTmp);
 			User user2 = (User) session.getAttribute("khachHang");
-			if(user2 != null) {
+			if (user2 != null) {
 				ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-				List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(user2.getUserID());
-				request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
-				ListOrderDetailsItem li = new ListOrderDetailsItem();
-				String slSP = li.getList().size()+"";
-				slSP = (slSP == "0")? "0" : slSP;
-				request.setAttribute("soLuongSP", slSP);
+				int lstProductFavoriteDao = productFaDao.getSoLuong2(user2.getUserID());
+				request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
+				ListOrderDetailsItem li = (ListOrderDetailsItem) session.getAttribute("listItem");
+				if (li != null) {
+					String slSP = li.getList().size() + "";
+					slSP = (slSP == "0") ? "0" : slSP;
+					request.setAttribute("soLuongSP", slSP);
+				} else {
+					request.setAttribute("soLuongSP", "0");
+				}
 			}
-			
 
 			// setAttributes
 			// phần đầu
@@ -212,6 +215,7 @@ public class LoadPageProSingleController extends HttpServlet {
 			request.setAttribute("soSaoLoai3", soSaoLoai3);
 			request.setAttribute("soSaoLoai4", soSaoLoai4);
 			request.setAttribute("soSaoLoai5", soSaoLoai5);
+			request.setAttribute("imageAnh", proTmp.getImage());
 			// mô tả
 			request.setAttribute("arrDescription", arrStrDescription);
 			request.setAttribute("soPhanTuDes", Integer.valueOf(soPT - 1));
@@ -235,10 +239,9 @@ public class LoadPageProSingleController extends HttpServlet {
 
 			// đánh giá nhận xét
 			request.setAttribute("danhSachDanhGia", lst);
-			
+
 			// danh sách sản phẩm liên quan
 			request.setAttribute("danhSachSanPhamLienQuan", dsSanPhamLQ);
-			
 
 			// dữ liệu từ servlet khác
 			if (sourceServlet.equalsIgnoreCase("DisplayCommentProduct")) {
@@ -253,7 +256,7 @@ public class LoadPageProSingleController extends HttpServlet {
 				request.setAttribute("kiemTraComment", checkComment2);
 				request.setAttribute("thongBao", baoLoi);
 				request.setAttribute("sourceServlet", "DisplayCommentProductEmailError");
-			}else if(sourceServlet.equalsIgnoreCase("LoadPageProSingleMemoryColor")) {
+			} else if (sourceServlet.equalsIgnoreCase("LoadPageProSingleMemoryColor")) {
 				request.setAttribute("kiemTraComment", checkMemoryColor);
 				System.out.println("gâu gâu gâu gâu ");
 				request.setAttribute("thongBao", baoLoi);

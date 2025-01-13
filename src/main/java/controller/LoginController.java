@@ -1,7 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,6 +20,7 @@ import model.ListOrderDetailsItem;
 import model.Product;
 import model.User;
 import util.MaHoa;
+import util.NgonNguDAO;
 
 /**
  * Servlet implementation class LoginController
@@ -66,6 +69,8 @@ public class LoginController extends HttpServlet {
 		UserDao userDao = new UserDao();
 		ProductFavoriteDAO proFaDao = new ProductFavoriteDAO();
 		User us = userDao.selectByUserNameAndPassWord(user);
+		Map<String, String> m = new NgonNguDAO().vietnameseLanguage();
+		request.setAttribute("map", m);
 		if (us != null) {
 			if (us.getRole().getRoleID() == 2) {
 				if (us.getStatus() == 1) {

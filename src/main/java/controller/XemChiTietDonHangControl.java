@@ -43,18 +43,24 @@ public class XemChiTietDonHangControl extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			User user = (User) session.getAttribute("khachHang");
 			if(user != null) {
+				
 				OrdersDAO orderDAO = new OrdersDAO();
 				OrderDetailsDAO orderDetailDAO = new OrderDetailsDAO();
-				String orderID = request.getParameter("ordersID");
-				Orders order = orderDAO.getOrdersByID(orderID);
-				List<OrderDetails> lst = orderDetailDAO.getListOrderDetails(orderID);
+				String orderID = request.getParameter("ordersID")+"";
+				
+				if(orderID.equalsIgnoreCase("null")) {
+					orderID = (String) request.getAttribute("ordersID");
+					System.out.println(orderID);
+				}
+				Orders order = orderDAO.selectOrderByID2(orderID);
+				List<OrderDetails> lst = orderDetailDAO.getListOrderDetails2(orderID);
 				double tongTien = 0;
 				for (OrderDetails orderDetails : lst) {
 					tongTien += orderDetails.getUnitPrice();
 				}
 			    double tongThanhToan = tongTien + 50000;
 			    ProductFavoriteDAO proFaDao = new ProductFavoriteDAO();
-			    int soLuongSanPhamLike = proFaDao.getSoLuong(user.getUserID().trim());
+			    int soLuongSanPhamLike = proFaDao.getSoLuong2(user.getUserID().trim());
 				ListOrderDetailsItem li = (ListOrderDetailsItem) session.getAttribute("listItem");
 				String slSP = "";
 				if (li != null) {
@@ -63,6 +69,14 @@ public class XemChiTietDonHangControl extends HttpServlet {
 				} else {
 					slSP = "0";
 				}
+				boolean baoLoi2 = false;
+				String mess =(String) request.getAttribute("mess")+"";
+				if(!mess.equalsIgnoreCase("null")) {
+				    baoLoi2 = true;
+					request.setAttribute("mess", mess);
+					request.setAttribute("baoLoi2", baoLoi2);
+				}
+				request.setAttribute("baoLoi2", baoLoi2);
 				request.setAttribute("orders", order);
 				request.setAttribute("listOrderDetails", lst);
 				request.setAttribute("tongTien", tongTien);

@@ -59,8 +59,8 @@ public class AddProductListFavorite extends HttpServlet {
 					List<Product> lstPro2 = proDao.getProductMain();
 					List<Product> lstPro3 = proDao.getProductMain();
 					ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-					List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(user.getUserID());
-					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+					int lstProductFavoriteDao = productFaDao.getSoLuong2(user.getUserID());
+					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 					request.setAttribute("danhSachMain1", lstPro1);
 					request.setAttribute("danhSachMain2", lstPro2);
 					request.setAttribute("danhSachMain3", lstPro3);

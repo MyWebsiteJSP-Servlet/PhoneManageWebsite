@@ -55,7 +55,7 @@ public class GoToDonHangControl extends HttpServlet {
 					if(tongSoSP % 4 != 0) {
 						tongSoTrang++;
 					}
-					int soLuongSanPhamLike = proFaDao.getSoLuong(user.getUserID().trim());
+					int soLuongSanPhamLike = proFaDao.getSoLuong2(user.getUserID().trim());
 					ListOrderDetailsItem li = (ListOrderDetailsItem) session.getAttribute("listItem");
 					String slSP = "";
 					if (li != null) {
@@ -73,7 +73,7 @@ public class GoToDonHangControl extends HttpServlet {
 					RequestDispatcher rd = getServletContext().getRequestDispatcher("/profile-receipt.jsp");
 					rd.forward(request, response);
 				}else {
-					int soLuongSanPhamLike = proFaDao.getSoLuong(user.getUserID().trim());
+					int soLuongSanPhamLike = proFaDao.getSoLuong2(user.getUserID().trim());
 					ListOrderDetailsItem li = (ListOrderDetailsItem) session.getAttribute("listItem");
 					String slSP = "";
 					if (li != null) {

@@ -92,7 +92,7 @@ public class XacNhanThanhToanControl extends HttpServlet {
 				session.removeAttribute("cart");
 				session.removeAttribute("listItem");
 				check = true;
-				int soLuongSanPhamLike = proFaDao.getSoLuong(user.getUserID().trim());
+				int soLuongSanPhamLike = proFaDao.getSoLuong2(user.getUserID().trim());
 				ListOrderDetailsItem li = (ListOrderDetailsItem) session.getAttribute("listItem");
 				String slSP = "";
 				if (li != null) {
@@ -117,7 +117,7 @@ public class XacNhanThanhToanControl extends HttpServlet {
 				request.setAttribute("note", ghiChu);
 				request.setAttribute("kiemTra", check);
 				request.setAttribute("notify", baoLoi);
-				int soLuongSanPhamLike = proFaDao.getSoLuong(user.getUserID().trim());
+				int soLuongSanPhamLike = proFaDao.getSoLuong2(user.getUserID().trim());
 				ListOrderDetailsItem li = (ListOrderDetailsItem) session.getAttribute("listItem");
 				String slSP = "";
 				if (li != null) {
@@ -139,7 +139,7 @@ public class XacNhanThanhToanControl extends HttpServlet {
 	private int xuLyConLai(String productID, int quantity) {
 		// TODO Auto-generated method stub
 		ProductDao proDao = new ProductDao();
-		Product pro = proDao.selectProByID(productID);
+		Product pro = proDao.selectProByID2(productID);
 		int res = pro.getStockQuantity() - quantity;
 		return res;
 	}

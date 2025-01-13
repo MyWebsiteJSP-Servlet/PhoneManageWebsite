@@ -53,8 +53,8 @@ public class SearchOnBox extends HttpServlet {
 					String message = "Bạn chưa nhập vào searchBox nha";
 					boolean checkNoInput = true;
 					ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-					List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(user.getUserID());
-					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+					int lstProductFavoriteDao = productFaDao.getSoLuong2(user.getUserID());
+					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 					request.setAttribute("message", message);
 					request.setAttribute("checkNoInput", checkNoInput);
 					request.setAttribute("sourceServlet", "searchOnBox");
@@ -66,7 +66,7 @@ public class SearchOnBox extends HttpServlet {
 					ArrayList<Product> lst_Pro = proDao.selectProductByNameSearchBox(required, Integer.valueOf(page));
 					int tongSoTrang = proDao.getTongSoTrangSearchBox(required);
 					ProductFavoriteDAO productFaDao = new ProductFavoriteDAO();
-					List<ProductFavorite> lstProductFavoriteDao = productFaDao.getLstProFavorite(user.getUserID());
+					int lstProductFavoriteDao = productFaDao.getSoLuong2(user.getUserID());
 					ListOrderDetailsItem li = (ListOrderDetailsItem) session.getAttribute("listItem");
 					String slSP = "";
 					if (li != null) {
@@ -89,7 +89,7 @@ public class SearchOnBox extends HttpServlet {
 					request.setAttribute("checkNoInput", checkVar);
 					request.setAttribute("uri", uriReal);
 					request.setAttribute("thamSo", thamSo);
-					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao.size());
+					request.setAttribute("soLuongSanPhamLike", lstProductFavoriteDao);
 					System.out.println(tongSoTrang);
 					request.setAttribute("tongSoTrang", tongSoTrang);
 					request.setAttribute("listPro", lst_Pro);
