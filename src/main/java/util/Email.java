@@ -18,7 +18,7 @@ public class Email {
 	// Email: trananhduyvlm@gmail.com
 	// Password: nebeekfipcstxcox
 	static final String from = "trananhduyvlm@gmail.com";
-	static final String password = "tidm wnku vbhf zsns";
+	static final String password = "crrj cfqj itps jehy";
 
 	public static boolean sendEmail(String to, String tieuDe, String noiDung) {
 		// Properties : khai báo các thuộc tính
@@ -77,9 +77,10 @@ public class Email {
 	}
 
 	public static void main(String[] args) {
-		for (int i = 0; i < 10; i++) {
-			Email.sendEmail("Email của người nhận", System.currentTimeMillis() + "", "Đây là phần nội dung!");
-		}
+//		for (int i = 0; i < 10; i++) {
+//			System.out.println(sendEmail("22130063@st.hcmuaf.edu.vn", System.currentTimeMillis() + "", "Đây là phần nội dung!"));
+//		}
+		// System.out.println(System.currentTimeMillis()+"");
 
 	}
 
