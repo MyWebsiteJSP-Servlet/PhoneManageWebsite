@@ -126,10 +126,9 @@
 								<li><a
 									href="http://localhost:8080/MobileWebApp/load-product?page=1">Điện
 										thoại</a></li>
-								<li><a href="blog-default.html">Bài viết</a></li>
-								<li><a href="about.html">Thông tin</a></li>
-
-								<li><a href="contact-us.html">Liên hệ</a></li>
+								<li><a href="go-to-blog">Thông tin</a></li>
+								<li><a href="go-to-about">Bài viết</a></li>
+								<li><a href="http://localhost:8080/MobileWebApp/go-to-contactus">Liên hệ, hỗ trợ</a></li>
 							</ul>
 						</div>
 					</div>

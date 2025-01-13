@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +14,7 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="">
 <meta name="keywords" content="">
-<title>Duy LTW</title>
+<title>Nhom 21 LT WEB</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <!-- Style CSS -->
@@ -35,10 +34,9 @@
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 <style type="text/css">
 .search-bg {
 	position: relative; /* Giữ vị trí tương đối cho gợi ý */
@@ -134,6 +132,109 @@
 	background-color: #c9302c;
 	/*CSS form xác nhận thành công */
 }
+/* Phong cách riêng cho thẻ form */
+.custom-form {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-top: 20px;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Tùy chỉnh tiêu đề nhãn */
+.custom-form .form-group label {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+
+/* Tùy chỉnh ô input */
+.custom-form .form-group input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+    box-sizing: border-box;
+}
+
+/* Tùy chỉnh ô input khi bị disabled */
+.custom-form .form-group input:disabled {
+    background-color: #e9ecef;
+    color: #6c757d;
+}
+
+/* Tùy chỉnh nút trong form */
+.custom-form .btn-container .btn-back {
+    display: inline-block;
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border-radius: 4px;
+    font-size: 14px;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.custom-form .btn-container .btn-back:hover {
+    background-color: #0056b3;
+}
+
+/* Định nghĩa container để căn giữa */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Chiều cao 100% viewport */
+    background-color: #f5f5f5; /* Màu nền tùy chỉnh */
+}
+
+/* Phong cách của form */
+.custom-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+}
+/* Định nghĩa container */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+/* Thay đổi kích thước form */
+.custom-form {
+    background-color: #ffffff;
+    padding: 30px; /* Tăng khoảng cách bên trong form */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px; /* Tăng chiều rộng tối đa */
+    width: 100%;
+}
+
+/* Định nghĩa các input và button */
+.custom-form .form-group input {
+    height: 40px; /* Tăng chiều cao của input */
+    font-size: 16px; /* Tăng kích thước chữ */
+}
+
+.custom-form .btn-container .btn-back {
+    padding: 12px 20px; /* Tăng kích thước nút */
+    font-size: 16px; /* Tăng kích thước chữ trên nút */
+}
+
+
 </style>
 </head>
 
@@ -244,16 +345,14 @@
 		</div>
 	</div>
 	<!-- /. header-section-->
-	<!-- page-header -->
 	<div class="page-header">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
 					<div class="page-breadcrumb">
 						<ol class="breadcrumb">
 							<li><a href="#">Trang chủ</a></li>
-							<li>Giỏ hàng</li>
+							<li>Xuất hóa đơn</li>
 						</ol>
 					</div>
 
@@ -261,152 +360,41 @@
 			</div>
 		</div>
 	</div>
-	<!-- /.page-header-->
-	<!-- cart-section -->
-
-	<div class="container">
-		<div class="cart-content mt30 mb30">
-			<div class="title-header mb20">
-				<h2 class="title">Giỏ Hàng</h2>
-				<p>
-					<span class="text-blue">${size}</span> sản phẩm trong giỏ hàng của
-					bạn
-				</p>
-			</div>
-			<table class="table">
-				<thead class="thead-light">
-					<tr>
-						<th>Sản phẩm</th>
-						<th scope="col">Đơn giá</th>
-						<th scope="col">Số lượng</th>
-						<th scope="col">Thành tiền</th>
-						<th scope="col"></th>
-
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="orderDetails"
-						items="${sessionScope.listItem.getList()}">
-						<tr>
-							<td>
-								<div class="product-title item-center">
-									<img src="imagesphone/${orderDetails.product.image}" alt="">
-									<div>
-										<p>${orderDetails.product.name}</p>
-										<p>Màu sắc: ${orderDetails.product.informationPro.color}</p>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="item-center">${orderDetails.product.price}đ</div>
-							</td>
-							<td>
-								<div class="item-center">
-									<div class="quantity">
-										<a
-											href="giam-so-luong?productID=${orderDetails.product.productID}"><input
-											class="btn-quantity decrease-quantity" onclick="dcQuantity()"
-											type="button" value="-"></a> <input type="number"
-											max="${orderDetails.product.stockQuantity}" min="1"
-											name="quantity" value="${orderDetails.quantity}"
-											class="quantity-input" id="quantity-input"> <a
-											href="tang-so-luong?productID=${orderDetails.product.productID}"><input
-											class="btn-quantity increase-quantity" onclick="icQuantity()"
-											type="button" value="+"></a>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="item-center text-red">
-									<fmt:formatNumber value="${orderDetails.unitPrice * orderDetails.quantity}" type="currency" />
-								</div>
-
-							</td>
-							<td>
-								<div class="item-center pinside10">
-									<a href="delete-orderDetails-in-cart?orderDetailsID=${orderDetails.orderDetailsID}"><i class="far fa-trash-alt"></i></a>
-								</div>
-							</td>
-						</tr>
-					</c:forEach>
-
-					<!-- <tr>
-                        <td>
-                            <div class="item-center pdl10"><input type="checkbox" class="checkboxStyle"></div>
-                        </td>
-                        <td>
-                            <div class="product-title item-center">
-                                <img src="images/iphone11.png" alt="">
-                                <div>
-                                    <p>iPhone 11 Pro 128GB</p>
-                                    <p>Màu sắc: Xanh</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="item-center">17.000.000đ</div>
-                        </td>
-                        <td>
-                            <div class="item-center">
-                                <div class="quantity">
-                                    <input class="btn-quantity decrease-quantity" onclick="dcQuantity()" type="button"
-                                        value="-">
-                                    <input type="number" max="10" min="1" name="quantity" value="1"
-                                        class="quantity-input" id="quantity-input">
-                                    <input class="btn-quantity increase-quantity" onclick="icQuantity()" type="button"
-                                        value="+">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="item-center text-red">17.000.000đ</div>
-                        </td>
-                        <td>
-                            <div class="item-center pinside10"><i class="far fa-trash-alt"></i></div>
-                        </td>
-                    </tr> -->
-				</tbody>
-			</table>
-			<div class="prices-summary">
-				<div class="left-content">
-					<a href="LoadDataMain" class="derection-product text-blue"><i
-						class="fas fa-long-arrow-alt-left"></i> Tiếp tục mua hàng</a>
-				</div>
-				<div class="right-con">
-					<div class="total-receipt">
-						<div class="promotion-code pinside20">
-							<input type="text" class="input-code"
-								placeholder="Nhập mã ưu đãi">
-							<button type="submit" class="submit-code btn-default">Áp
-								dụng</button>
-						</div>
-						<ul class="prices pinside20">
-							<li class="prices-item"><span class="prices-text">Tạm
-									tính</span> <span class="prices-value"><fmt:formatNumber
-										value="${totalAmount}"
-										type="currency" /></span></li>
-							<li class="prices-item"><span class="prices-text">Giảm
-									giá</span> <span class="prices-value">0đ</span></li>
-						</ul>
-						<div class="prices-total pinside20">
-							<span class="price-text">Tổng cộng</span> <span
-								class="prices-value prices-final text-red"><fmt:formatNumber
-										value="${totalAmount}"
-										type="currency" /></span>
-						</div>
-					</div>
-					<a href="go-to-checkout" class="btn-default btn-checkout">Mua
-						Hàng</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /.cart-total -->
-	</div>
-
-	<!-- /.cart-section -->
-	<!-- footer -->
-	<div class="footer">
+	
+	<div class="form-container">
+	  
+	
+    <form class="custom-form">
+        <div class="form-group">
+            <label for="transaction-id">Transaction ID</label>
+            <input type="text" id="transaction-id" name="transaction-id" value="${tranID}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="order-id">Order ID</label>
+            <input type="text" id="order-id" name="order-id" value="${odID}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="payment-method">Payment Method</label>
+            <input type="text" id="payment-method" name="payment-method" value="${payMethods}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="payment-status">Payment Status</label>
+            <input type="text" id="payment-status" name="payment-status" value="${payStatus}" disabled>
+        </div>
+        <div class="form-group">
+            <label for="payment-date">Payment Date</label>
+            <input type="text" id="payment-date" name="payment-date" value="${date}" disabled>
+        </div>
+         <div class="btn-container">
+            <a href="xem-chi-tiet-don-hang?ordersID=${ordersID}" class="btn btn-back">Go Back</a>
+        </div>
+    </form>
+    
+      
+</div>
+	
+	
+    <div class="footer">
 		<div class="container">
 			<div class="row">
 				<!-- footer-company-links -->
@@ -435,11 +423,11 @@
 					<div class="footer-widget">
 						<h3 class="footer-title">Tiện ích</h3>
 						<ul class="arrow">
-							<li><a href="index.html">Trang chủ </a></li>
-							<li><a href="product-list.html">Điện thoại</a></li>
-							<li><a href="about.html">Thông tin</a></li>
-							<li><a href="blog-default.html">Bài viết</a></li>
-							<li><a href="contact-us.html">Liên hệ, hỗ trợ</a></li>
+							<li><a href="index.html">Home </a></li>
+							<li><a href="product-list.html">Mobie</a></li>
+							<li><a href="about.html">About</a></li>
+							<li><a href="blog-default.html">Blog</a></li>
+							<li><a href="contact-us.html">Contact</a></li>
 						</ul>
 					</div>
 				</div>
@@ -501,87 +489,3 @@
 			<!-- /. tiny-footer -->
 		</div>
 	</div>
-	<!-- /.footer -->
-	<script src="js/jquery.min.js" type="text/javascript"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="js/menumaker.js" type="text/javascript"></script>
-	<script type="text/javascript" src="js/jquery.sticky.js"></script>
-	<script type="text/javascript" src="js/sticky-header.js"></script>
-	<script type="text/javascript" src="js/owl.carousel.min.js"></script>
-	<script type="text/javascript" src="js/multiple-carousel.js"></script>
-
-	<script>
-        function dcQuantity() {
-            var result = document.getElementById('quantity-input');
-            var qty = result.value;
-            if (!isNaN(qty) && qty > 1) {
-                result.value--;
-                document.getElementById('quantity-input').innerHTML = qty;
-            }
-            return false;
-        };
-        function icQuantity() {
-            var result = document.getElementById('quantity-input');
-            var qty = result.value;
-            if (!isNaN(qty) && qty < 10) {
-                result.value++;
-                document.getElementById('quantity-input').innerHTML = qty;
-            }
-            return false;
-        }
-    </script>
-	<script type="text/javascript">
-	const searchBox = document.getElementById("searchBox");
-	const suggestionsList = document.getElementById("product-suggestions");
-
-	 // Xử lý khi người dùng nhập từ khóa
-	searchBox.addEventListener("input", function () {
-	    const keyword = this.value.trim();
-
-	    // Nếu từ khóa có ít nhất 1 ký tự
-	    if (keyword.length > 1) {
-	    	console.log(keyword);
-	    	console.log(`URL Fetch: SearchServlet?ans=`+keyword);
-	        fetch(`SearchServlet?ans=`+keyword)
-	            .then(response => response.json())
-	            .then(data => {
-	                // Xóa các gợi ý cũ
-	                suggestionsList.innerHTML = "";
-                  
-	                // Thêm các gợi ý mới
-	                data.forEach(product => {
-	                    const suggestionItem = document.createElement("li");
-	                    suggestionItem.textContent = product.name;
-	                    suggestionItem.addEventListener("click", function () {
-	                        searchBox.value = product.name; // Gán sản phẩm được chọn vào thanh tìm kiếm
-	                        suggestionsList.innerHTML = ""; // Xóa gợi ý
-	                        suggestionsList.classList.remove("active"); // Ẩn danh sách
-	                    });
-	                    suggestionsList.appendChild(suggestionItem);
-	                });
-
-	                // Hiển thị danh sách gợi ý
-	                suggestionsList.classList.add("active");
-	            });
-	            
-	    } else {
-	        // Ẩn danh sách nếu không có từ khóa
-	        suggestionsList.innerHTML = "";
-	        suggestionsList.classList.remove("active");
-	    }
-	});
-
-	// Ẩn danh sách khi nhấp ra ngoài
-	document.addEventListener("click", function (e) {
-	    if (!searchBox.contains(e.target) && !suggestionsList.contains(e.target)) {
-	        suggestionsList.innerHTML = "";
-	        suggestionsList.classList.remove("active");
-	    }
-	}); 
-	
-	</script>
-
-</body>
-
-</html>

@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +14,7 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="">
 <meta name="keywords" content="">
-<title>Duy LTW</title>
+<title>Nhom 21 LT WEB</title>
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <!-- Style CSS -->
@@ -35,10 +34,9 @@
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 <style type="text/css">
 .search-bg {
 	position: relative; /* Giữ vị trí tương đối cho gợi ý */
@@ -134,6 +132,92 @@
 	background-color: #c9302c;
 	/*CSS form xác nhận thành công */
 }
+
+.payment-section .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.payment-section h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.payment-section p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 16px;
+}
+
+.payment-section .payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.payment-section .payment-form label {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
+.payment-section .payment-form input[type="text"],
+.payment-section .payment-form input[type="email"],
+.payment-section .payment-form input[type="date"],
+.payment-section .payment-form select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.payment-section .payment-form input[type="text"]:focus,
+.payment-section .payment-form input[type="email"]:focus,
+.payment-section .payment-form input[type="date"]:focus,
+.payment-section .payment-form select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.payment-section .payment-form button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.payment-section .payment-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.payment-section footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #777;
+    font-size: 14px;
+}
+
+.payment-section footer p {
+    margin: 0;
+}
+
+
 </style>
 </head>
 
@@ -244,16 +328,14 @@
 		</div>
 	</div>
 	<!-- /. header-section-->
-	<!-- page-header -->
 	<div class="page-header">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
 					<div class="page-breadcrumb">
 						<ol class="breadcrumb">
 							<li><a href="#">Trang chủ</a></li>
-							<li>Giỏ hàng</li>
+							<li>Thanh toán</li>
 						</ol>
 					</div>
 
@@ -261,151 +343,63 @@
 			</div>
 		</div>
 	</div>
-	<!-- /.page-header-->
-	<!-- cart-section -->
+	<!-- login-form -->
+	<div class="payment-section">
+	 <div class="container">
+        <h1>Thanh toán</h1>
+        <p>Vui lòng kiểm tra thông tin Khách hàng, thông tin Giỏ hàng trước khi thanh toán</p>
 
-	<div class="container">
-		<div class="cart-content mt30 mb30">
-			<div class="title-header mb20">
-				<h2 class="title">Giỏ Hàng</h2>
-				<p>
-					<span class="text-blue">${size}</span> sản phẩm trong giỏ hàng của
-					bạn
-				</p>
-			</div>
-			<table class="table">
-				<thead class="thead-light">
-					<tr>
-						<th>Sản phẩm</th>
-						<th scope="col">Đơn giá</th>
-						<th scope="col">Số lượng</th>
-						<th scope="col">Thành tiền</th>
-						<th scope="col"></th>
+        <form class="payment-form" action="tien-hanh-thanh-toan" method="POST">
+            <h2>Thông tin khách hàng</h2>
+             <input type="hidden" value="${ordersID}" name = "orderID">
+            <label for="fullname">Họ tên</label>
+            <input type="text" id="fullname" placeholder="Nhập họ tên" value="${hoTen}" readonly name="hoTen">
 
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="orderDetails"
-						items="${sessionScope.listItem.getList()}">
-						<tr>
-							<td>
-								<div class="product-title item-center">
-									<img src="imagesphone/${orderDetails.product.image}" alt="">
-									<div>
-										<p>${orderDetails.product.name}</p>
-										<p>Màu sắc: ${orderDetails.product.informationPro.color}</p>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="item-center">${orderDetails.product.price}đ</div>
-							</td>
-							<td>
-								<div class="item-center">
-									<div class="quantity">
-										<a
-											href="giam-so-luong?productID=${orderDetails.product.productID}"><input
-											class="btn-quantity decrease-quantity" onclick="dcQuantity()"
-											type="button" value="-"></a> <input type="number"
-											max="${orderDetails.product.stockQuantity}" min="1"
-											name="quantity" value="${orderDetails.quantity}"
-											class="quantity-input" id="quantity-input"> <a
-											href="tang-so-luong?productID=${orderDetails.product.productID}"><input
-											class="btn-quantity increase-quantity" onclick="icQuantity()"
-											type="button" value="+"></a>
-									</div>
-								</div>
-							</td>
-							<td>
-								<div class="item-center text-red">
-									<fmt:formatNumber value="${orderDetails.unitPrice * orderDetails.quantity}" type="currency" />
-								</div>
+            <label for="gender">Giới tính</label>
+            <select id="gender" name = "gioiTinh">
+                <option value="Nam" selected= <c:if test="${gioiTinh == 'Nam'}">selected</c:if>>Nam</option>
+                <option value="Nữ"  <c:if test="${gioiTinh == 'Nữ'}">selected</c:if>>Nữ</option>
+                <option value="Khác" <c:if test="${gioiTinh == 'Khác'}">selected</c:if>>Khác</option>
+            </select>
 
-							</td>
-							<td>
-								<div class="item-center pinside10">
-									<a href="delete-orderDetails-in-cart?orderDetailsID=${orderDetails.orderDetailsID}"><i class="far fa-trash-alt"></i></a>
-								</div>
-							</td>
-						</tr>
-					</c:forEach>
+            <label for="address">Địa chỉ</label>
+            <input type="text" id="address" placeholder="Nhập địa chỉ" value="${diaChi}" readonly name= "diaChi">
 
-					<!-- <tr>
-                        <td>
-                            <div class="item-center pdl10"><input type="checkbox" class="checkboxStyle"></div>
-                        </td>
-                        <td>
-                            <div class="product-title item-center">
-                                <img src="images/iphone11.png" alt="">
-                                <div>
-                                    <p>iPhone 11 Pro 128GB</p>
-                                    <p>Màu sắc: Xanh</p>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="item-center">17.000.000đ</div>
-                        </td>
-                        <td>
-                            <div class="item-center">
-                                <div class="quantity">
-                                    <input class="btn-quantity decrease-quantity" onclick="dcQuantity()" type="button"
-                                        value="-">
-                                    <input type="number" max="10" min="1" name="quantity" value="1"
-                                        class="quantity-input" id="quantity-input">
-                                    <input class="btn-quantity increase-quantity" onclick="icQuantity()" type="button"
-                                        value="+">
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="item-center text-red">17.000.000đ</div>
-                        </td>
-                        <td>
-                            <div class="item-center pinside10"><i class="far fa-trash-alt"></i></div>
-                        </td>
-                    </tr> -->
-				</tbody>
-			</table>
-			<div class="prices-summary">
-				<div class="left-content">
-					<a href="LoadDataMain" class="derection-product text-blue"><i
-						class="fas fa-long-arrow-alt-left"></i> Tiếp tục mua hàng</a>
-				</div>
-				<div class="right-con">
-					<div class="total-receipt">
-						<div class="promotion-code pinside20">
-							<input type="text" class="input-code"
-								placeholder="Nhập mã ưu đãi">
-							<button type="submit" class="submit-code btn-default">Áp
-								dụng</button>
-						</div>
-						<ul class="prices pinside20">
-							<li class="prices-item"><span class="prices-text">Tạm
-									tính</span> <span class="prices-value"><fmt:formatNumber
-										value="${totalAmount}"
-										type="currency" /></span></li>
-							<li class="prices-item"><span class="prices-text">Giảm
-									giá</span> <span class="prices-value">0đ</span></li>
-						</ul>
-						<div class="prices-total pinside20">
-							<span class="price-text">Tổng cộng</span> <span
-								class="prices-value prices-final text-red"><fmt:formatNumber
-										value="${totalAmount}"
-										type="currency" /></span>
-						</div>
-					</div>
-					<a href="go-to-checkout" class="btn-default btn-checkout">Mua
-						Hàng</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- /.cart-total -->
-	</div>
+            <label for="phone">Điện thoại</label>
+            <input type="text" id="phone" placeholder="Nhập số điện thoại" value="${dienThoai}" readonly name = "dienThoai">
 
-	<!-- /.cart-section -->
-	<!-- footer -->
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Nhập email" value="${email}" readonly name = "email">
+
+            <label for="payment-method">Hình thức thanh toán(Nếu là tiền mặt thì vui lòng không nhập số tài khoản tránh rủi ro)</label>
+            <select id="payment-method" name = "payment">
+                <option value="cash">Tiền mặt</option>
+                <option value="BIDV">BIDV</option>
+                <option value="Sacombank">Sacombank</option>
+                <option value="MoMo">MoMo</option>
+                <option value="MBBank">MBBank</option>
+                <option value="TPBank">TPBank</option>
+            </select>
+            
+              <!-- Thêm trường nhập số tiền khoản -->
+            <label for="input-amount">Số tài khoản</label>
+            <input type="text" id="input-amount" placeholder="Nhập số tài khoản" name = "soTaiKhoan">
+
+            <!-- Thêm trường hiển thị số tiền cần thanh toán -->
+            <label for="total-amount">Số tiền cần thanh toán</label>
+            <input type="text" id="total-amount" placeholder="0" readonly value="${soTienCanThanhToan}" name = "soTienThanhToan"> <!-- readonly đảm bảo không chỉnh sửa -->
+            
+
+            <button type="submit">Thanh toán</button>
+        </form>
+
+        <footer>
+            <p>Bản quyền © bởi Nền Tảng - 2019. Hành trang tới Tương lai</p>
+        </footer>
+    </div>
+    </div>
+	
+	
 	<div class="footer">
 		<div class="container">
 			<div class="row">
@@ -435,11 +429,11 @@
 					<div class="footer-widget">
 						<h3 class="footer-title">Tiện ích</h3>
 						<ul class="arrow">
-							<li><a href="index.html">Trang chủ </a></li>
-							<li><a href="product-list.html">Điện thoại</a></li>
-							<li><a href="about.html">Thông tin</a></li>
-							<li><a href="blog-default.html">Bài viết</a></li>
-							<li><a href="contact-us.html">Liên hệ, hỗ trợ</a></li>
+							<li><a href="index.html">Home </a></li>
+							<li><a href="product-list.html">Mobie</a></li>
+							<li><a href="about.html">About</a></li>
+							<li><a href="blog-default.html">Blog</a></li>
+							<li><a href="contact-us.html">Contact</a></li>
 						</ul>
 					</div>
 				</div>
@@ -501,87 +495,22 @@
 			<!-- /. tiny-footer -->
 		</div>
 	</div>
-	<!-- /.footer -->
-	<script src="js/jquery.min.js" type="text/javascript"></script>
-	<!-- Include all compiled plugins (below), or include individual files as needed -->
-	<script src="js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="js/menumaker.js" type="text/javascript"></script>
-	<script type="text/javascript" src="js/jquery.sticky.js"></script>
-	<script type="text/javascript" src="js/sticky-header.js"></script>
-	<script type="text/javascript" src="js/owl.carousel.min.js"></script>
-	<script type="text/javascript" src="js/multiple-carousel.js"></script>
-
-	<script>
-        function dcQuantity() {
-            var result = document.getElementById('quantity-input');
-            var qty = result.value;
-            if (!isNaN(qty) && qty > 1) {
-                result.value--;
-                document.getElementById('quantity-input').innerHTML = qty;
-            }
-            return false;
-        };
-        function icQuantity() {
-            var result = document.getElementById('quantity-input');
-            var qty = result.value;
-            if (!isNaN(qty) && qty < 10) {
-                result.value++;
-                document.getElementById('quantity-input').innerHTML = qty;
-            }
-            return false;
-        }
-    </script>
+	<c:if test="${check == true }">
+		<div class="modal" id="successModal">
+			<div class="modal-content">
+				<img
+					src="https://tse1.mm.bing.net/th?id=OIP.jZnEX7kzfh_5H-lln_XraAHaDt&pid=Api&P=0&h=180"
+					alt="Notify Icon" style="width: 100px; height: 50px" />
+				<h3>${thongBao}</h3>
+				<button class="btn-close" onclick="closeModal()" name="action"
+					value="xacThuc">Đóng</button>
+			</div>
+		</div>
+	</c:if>
 	<script type="text/javascript">
-	const searchBox = document.getElementById("searchBox");
-	const suggestionsList = document.getElementById("product-suggestions");
+	function closeModal() {
+		document.getElementById("successModal").style.display = "none";
 
-	 // Xử lý khi người dùng nhập từ khóa
-	searchBox.addEventListener("input", function () {
-	    const keyword = this.value.trim();
-
-	    // Nếu từ khóa có ít nhất 1 ký tự
-	    if (keyword.length > 1) {
-	    	console.log(keyword);
-	    	console.log(`URL Fetch: SearchServlet?ans=`+keyword);
-	        fetch(`SearchServlet?ans=`+keyword)
-	            .then(response => response.json())
-	            .then(data => {
-	                // Xóa các gợi ý cũ
-	                suggestionsList.innerHTML = "";
-                  
-	                // Thêm các gợi ý mới
-	                data.forEach(product => {
-	                    const suggestionItem = document.createElement("li");
-	                    suggestionItem.textContent = product.name;
-	                    suggestionItem.addEventListener("click", function () {
-	                        searchBox.value = product.name; // Gán sản phẩm được chọn vào thanh tìm kiếm
-	                        suggestionsList.innerHTML = ""; // Xóa gợi ý
-	                        suggestionsList.classList.remove("active"); // Ẩn danh sách
-	                    });
-	                    suggestionsList.appendChild(suggestionItem);
-	                });
-
-	                // Hiển thị danh sách gợi ý
-	                suggestionsList.classList.add("active");
-	            });
-	            
-	    } else {
-	        // Ẩn danh sách nếu không có từ khóa
-	        suggestionsList.innerHTML = "";
-	        suggestionsList.classList.remove("active");
-	    }
-	});
-
-	// Ẩn danh sách khi nhấp ra ngoài
-	document.addEventListener("click", function (e) {
-	    if (!searchBox.contains(e.target) && !suggestionsList.contains(e.target)) {
-	        suggestionsList.innerHTML = "";
-	        suggestionsList.classList.remove("active");
-	    }
-	}); 
+	}
 	
 	</script>
-
-</body>
-
-</html>

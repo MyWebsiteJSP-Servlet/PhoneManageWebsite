@@ -201,8 +201,8 @@
 								<li><a
 									href="load-page-favorite-list?userID=${sessionScope.khachHang.userID}"><i
 										class="fa fa-heart"></i><sup class="cart-quantity">${soLuongSanPhamLike}</sup></a></li>
-								<li><a href="cart.html" class="title"><i
-										class="fa fa-shopping-cart"></i><sup class="cart-quantity">1</sup></a>
+								<li><a href="go-to-cart" class="title"><i
+										class="fa fa-shopping-cart"></i><sup class="cart-quantity">${soLuongSP}</sup></a>
 								</li>
 							</c:if>
                         </ul>
@@ -220,14 +220,13 @@
                         <!-- navigations-->
                         <div id="navigation">
                             <ul>
-                                <li class="active"><a href="LoadDataMain">Trang chủ</a></li>
-                                <li><a href="http://localhost:8080/MobileWebApp/load-product?page=1">Điện thoại</a>
-                                </li>
-                                <li><a href="about.html">Thông tin</a>
-                                </li>
-                                <li><a href="blog-default.html">Bài viết</a> </li>
-                                <li><a href="contact-us.html">Liên hệ, hỗ trợ</a>
-                                </li>
+                               <li class="active"><a href="LoadDataMain">Trang chủ</a></li>
+								<li><a
+									href="http://localhost:8080/MobileWebApp/load-product?page=1">Điện
+										thoại</a></li>
+								<li><a href="go-to-blog">Thông tin</a></li>
+								<li><a href="go-to-about">Bài viết</a></li>
+								<li><a href="http://localhost:8080/MobileWebApp/go-to-contactus">Liên hệ, hỗ trợ</a></li>
                             </ul>
                         </div>
                     </div>
